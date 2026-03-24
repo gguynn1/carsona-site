@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carsona — Privacy Policy</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1d1d1f;
+      --muted: #6e6e73;
+      --accent: #0071e3;
+      --border: #d2d2d7;
+      --card: #f5f5f7;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1c1e;
+        --fg: #f5f5f7;
+        --muted: #98989d;
+        --accent: #2997ff;
+        --border: #38383a;
+        --card: #2c2c2e;
+      }
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-text-size-adjust: 100%;
+    }
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+    nav {
+      margin-bottom: 32px;
+      font-size: 0.85rem;
+    }
+    nav a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    nav a:hover { text-decoration: underline; }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+    }
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 36px 0 12px;
+    }
+    p, li {
+      font-size: 0.95rem;
+      color: var(--fg);
+      margin-bottom: 12px;
+    }
+    ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+    li { margin-bottom: 6px; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px;
+      font-size: 0.9rem;
+    }
+    th, td {
+      text-align: left;
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      font-weight: 600;
+      background: var(--card);
+    }
+    td { color: var(--fg); }
+    strong { font-weight: 600; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin: 20px 0;
+    }
+    .card p:last-child { margin-bottom: 0; }
+    footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav><a href="index.html">&larr; Carsona</a></nav>
+
+    <h1>Privacy Policy</h1>
+    <p class="subtitle">Carsona for iOS · Bundle ID: com.obd2dashboard.app · Effective March 24, 2026</p>
+
+    <h2>Overview</h2>
+    <p>Carsona is a <strong>local-first</strong> OBD-II vehicle dashboard. Your data stays on your device. There are no user accounts, no analytics SDKs, and no data brokers. We do not sell, share, or monetize your personal information.</p>
+
+    <h2>Data We Access</h2>
+    <p>Carsona requests the following device permissions, each for a specific purpose:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Permission</th>
+          <th>Purpose</th>
+          <th>Stored?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Bluetooth</strong></td>
+          <td>Communicate with your OBD-II adapter to read vehicle diagnostics (read-only — Carsona never writes to your vehicle's ECU)</td>
+          <td>Diagnostic values stored locally on device</td>
+        </tr>
+        <tr>
+          <td><strong>Location</strong></td>
+          <td>Provide GPS context for trip logging and fetch local weather conditions</td>
+          <td>Stored locally; sent to Open-Meteo only if you enable weather with your own API key</td>
+        </tr>
+        <tr>
+          <td><strong>Motion &amp; Fitness</strong></td>
+          <td>Measure G-force and vehicle dynamics for the dashboard display</td>
+          <td>Processed in real time; not persisted beyond the current session</td>
+        </tr>
+        <tr>
+          <td><strong>Camera</strong></td>
+          <td>Scan your vehicle's VIN barcode for quick vehicle identification</td>
+          <td>Camera frames are processed on-device; images are not saved or transmitted</td>
+        </tr>
+        <tr>
+          <td><strong>Microphone &amp; Speech Recognition</strong></td>
+          <td>Push-to-talk voice commands while driving hands-free</td>
+          <td>Audio is processed by Apple's on-device speech recognition; not recorded or stored by Carsona</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Optional Third-Party Services</h2>
+    <p>Carsona can optionally connect to external APIs — but <strong>only if you choose to enable them</strong> and provide your own API keys. Carsona never supplies keys on your behalf and never intermediates your data through our servers.</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>What's Sent</th>
+          <th>Their Privacy Policy</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Anthropic</strong> (Claude AI)</td>
+          <td>Vehicle data context and your prompts for AI-assisted diagnostics</td>
+          <td><a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a></td>
+        </tr>
+        <tr>
+          <td><strong>ElevenLabs</strong> (TTS)</td>
+          <td>Text for voice synthesis of AI responses</td>
+          <td><a href="https://elevenlabs.io/privacy" target="_blank" rel="noopener">elevenlabs.io/privacy</a></td>
+        </tr>
+        <tr>
+          <td><strong>Open-Meteo</strong></td>
+          <td>GPS coordinates (latitude/longitude) for weather data</td>
+          <td><a href="https://open-meteo.com/en/terms" target="_blank" rel="noopener">open-meteo.com/terms</a></td>
+        </tr>
+        <tr>
+          <td><strong>NHTSA</strong></td>
+          <td>VIN for recall and safety lookups</td>
+          <td><a href="https://www.nhtsa.gov/privacy-policy" target="_blank" rel="noopener">nhtsa.gov/privacy-policy</a></td>
+        </tr>
+        <tr>
+          <td><strong>EPA</strong></td>
+          <td>Vehicle year/make/model for fuel economy and specs</td>
+          <td><a href="https://www.epa.gov/privacy" target="_blank" rel="noopener">epa.gov/privacy</a></td>
+        </tr>
+        <tr>
+          <td><strong>Apple MapKit</strong></td>
+          <td>Coordinates for reverse geocoding (location names)</td>
+          <td><a href="https://www.apple.com/privacy/" target="_blank" rel="noopener">apple.com/privacy</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="card">
+      <p><strong>Your keys, your control.</strong> API keys are stored in your device's Keychain. Carsona has no server component — data flows directly from your device to the service you configured. Removing a key immediately stops all communication with that service.</p>
+    </div>
+
+    <h2>Data Storage &amp; Security</h2>
+    <ul>
+      <li>All vehicle data, trip logs, and preferences are stored <strong>locally on your device</strong> using Core Data and UserDefaults.</li>
+      <li>API keys are stored in the iOS Keychain, protected by the Secure Enclave.</li>
+      <li>Carsona does not operate any backend servers, databases, or cloud storage.</li>
+      <li>Uninstalling the app removes all locally stored data.</li>
+    </ul>
+
+    <h2>Data Sharing</h2>
+    <p>Carsona does <strong>not</strong>:</p>
+    <ul>
+      <li>Sell or rent your data to anyone</li>
+      <li>Share data with advertising networks</li>
+      <li>Include analytics or tracking SDKs</li>
+      <li>Transmit data to our servers (we have none)</li>
+      <li>Create user profiles or accounts</li>
+    </ul>
+
+    <h2>Children's Privacy</h2>
+    <p>Carsona is not directed at children under 13 and does not knowingly collect information from children.</p>
+
+    <h2>Changes to This Policy</h2>
+    <p>If this policy is updated, the effective date at the top of the page will be revised. Continued use of the app after changes constitutes acceptance of the updated policy.</p>
+
+    <h2>Contact</h2>
+    <p>Questions about this privacy policy? Reach us at <a href="mailto:[YOUR EMAIL]">[YOUR EMAIL]</a>.</p>
+
+    <footer>
+      <p>&copy; 2026 Carsona. All rights reserved. · <a href="support.html">Support</a> · <a href="index.html">Home</a></p>
+    </footer>
+  </div>
+</body>
+</html>

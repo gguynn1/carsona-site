@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carsona — Support</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #1d1d1f;
+      --muted: #6e6e73;
+      --accent: #0071e3;
+      --border: #d2d2d7;
+      --card: #f5f5f7;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1c1e;
+        --fg: #f5f5f7;
+        --muted: #98989d;
+        --accent: #2997ff;
+        --border: #38383a;
+        --card: #2c2c2e;
+      }
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+      -webkit-text-size-adjust: 100%;
+    }
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 48px 24px 64px;
+    }
+    nav {
+      margin-bottom: 32px;
+      font-size: 0.85rem;
+    }
+    nav a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    nav a:hover { text-decoration: underline; }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+    }
+    h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 36px 0 12px;
+    }
+    p, li {
+      font-size: 0.95rem;
+      color: var(--fg);
+      margin-bottom: 12px;
+    }
+    ul {
+      padding-left: 20px;
+      margin-bottom: 16px;
+    }
+    li { margin-bottom: 6px; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    details {
+      background: var(--card);
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    summary {
+      padding: 16px 20px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    summary::-webkit-details-marker { display: none; }
+    summary::after {
+      content: "+";
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--muted);
+      transition: transform 0.2s;
+    }
+    details[open] summary::after {
+      content: "\2212";
+    }
+    .answer {
+      padding: 0 20px 16px;
+      color: var(--fg);
+    }
+    .answer p { margin-bottom: 8px; }
+    .answer p:last-child { margin-bottom: 0; }
+    .contact-card {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 24px;
+      margin: 24px 0;
+      text-align: center;
+    }
+    .contact-card p { margin-bottom: 8px; }
+    .contact-card a {
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+    footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav><a href="index.html">&larr; Carsona</a></nav>
+
+    <h1>Support</h1>
+    <p class="subtitle">Carsona for iOS — help &amp; frequently asked questions</p>
+
+    <h2>Frequently Asked Questions</h2>
+
+    <details>
+      <summary>What is Sandbox Mode?</summary>
+      <div class="answer">
+        <p>Sandbox Mode lets you explore Carsona without a real OBD-II adapter. It simulates realistic vehicle data so you can try every feature — gauges, trip logging, AI diagnostics — before connecting to your car.</p>
+        <p>You can enable Sandbox Mode from <strong>Settings &rarr; Connection</strong>. No Bluetooth hardware is required.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Which OBD-II adapters are compatible?</summary>
+      <div class="answer">
+        <p>Carsona works with <strong>Bluetooth Low Energy (BLE) ELM327-compatible</strong> adapters. Most adapters sold as "Bluetooth 4.0+" or "BLE OBD2" will work. Common compatible adapters include:</p>
+        <ul>
+          <li>OBDLink MX+ (recommended)</li>
+          <li>Vgate iCar Pro BLE</li>
+          <li>Veepeak OBDCheck BLE+</li>
+        </ul>
+        <p><strong>Not compatible:</strong> Classic Bluetooth (non-BLE) adapters, Wi-Fi adapters, and USB adapters are not supported. If your adapter pairs through iOS Settings &rarr; Bluetooth rather than appearing inside the app, it is likely a classic Bluetooth device and won't work with Carsona.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>What are the optional API keys for?</summary>
+      <div class="answer">
+        <p>Carsona is fully functional without any API keys. However, you can unlock extra features by providing your own keys in <strong>Settings &rarr; API Keys</strong>:</p>
+        <ul>
+          <li><strong>Anthropic (Claude)</strong> — AI-powered diagnostic explanations and voice assistant</li>
+          <li><strong>ElevenLabs</strong> — Natural-sounding text-to-speech for AI responses</li>
+          <li><strong>Open-Meteo</strong> — Live weather data on your dashboard</li>
+          <li><strong>NHTSA</strong> — Vehicle recall and safety lookups by VIN</li>
+          <li><strong>EPA</strong> — Fuel economy specs and vehicle data</li>
+        </ul>
+        <p>Your keys are stored securely in the iOS Keychain and are sent directly to each service — Carsona has no intermediary server.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Does Carsona write to my car's computer?</summary>
+      <div class="answer">
+        <p><strong>No.</strong> Carsona is strictly read-only. It only uses OBD-II Mode 01 (live data) and safe ELM327 configuration commands. It will never clear diagnostic codes, reset monitors, trigger actuator tests, or modify any vehicle settings.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>Where is my data stored?</summary>
+      <div class="answer">
+        <p>Everything stays on your device. Carsona has no cloud backend, no user accounts, and no analytics. Uninstalling the app deletes all data. See our <a href="privacy.html">Privacy Policy</a> for full details.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary>The app can't find my adapter</summary>
+      <div class="answer">
+        <p>Try these steps:</p>
+        <ul>
+          <li>Make sure your adapter is plugged into the OBD-II port and the vehicle ignition is on (at least ACC position).</li>
+          <li>Confirm your adapter is BLE (Bluetooth Low Energy), not classic Bluetooth or Wi-Fi.</li>
+          <li>Check that Bluetooth is enabled in iOS Settings.</li>
+          <li>If the adapter appears in iOS Settings &rarr; Bluetooth, <strong>forget</strong> it there — BLE devices should only connect through the app, not through system pairing.</li>
+          <li>Force-quit Carsona and reopen it, or toggle Bluetooth off and back on.</li>
+        </ul>
+      </div>
+    </details>
+
+    <h2>Contact Us</h2>
+    <div class="contact-card">
+      <p>Can't find what you're looking for?</p>
+      <p><a href="mailto:[YOUR EMAIL]">[YOUR EMAIL]</a></p>
+      <p style="color: var(--muted); font-size: 0.85rem; margin-top: 4px;">We typically respond within 48 hours.</p>
+    </div>
+
+    <h2>Resources</h2>
+    <p><a href="privacy.html">Privacy Policy</a></p>
+
+    <footer>
+      <p>&copy; 2026 Carsona. All rights reserved. · <a href="privacy.html">Privacy</a> · <a href="index.html">Home</a></p>
+    </footer>
+  </div>
+</body>
+</html>
