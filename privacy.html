@@ -215,10 +215,12 @@
 
       <h2>Optional Third-Party Services</h2>
       <p>
-        Carsona can optionally connect to external APIs — but
-        <strong>only if you choose to enable them</strong> and provide your own
-        API keys. Carsona never supplies keys on your behalf and never
-        intermediates your data through our servers.
+        Carsona can optionally connect to external APIs if you choose to enable
+        those features. Depending on the build you are using, access may come
+        from API keys you entered in Settings or from app-provided credentials
+        included for limited development, beta, or review use. Carsona does not
+        currently proxy those requests through its own servers; data flows
+        directly from your device to the selected service.
       </p>
       <table>
         <thead>
@@ -308,10 +310,13 @@
 
       <div class="card">
         <p>
-          <strong>Your keys, your control.</strong> API keys are stored locally
-          on your device. Carsona has no server component — data flows directly
-          from your device to the service you configured. Removing a key
-          immediately stops all communication with that service.
+          <strong>Credential handling.</strong> API keys that you enter are
+          stored locally on your device. Some development, beta, or review
+          builds may also include app-provided defaults for selected services.
+          Carsona has no server component today, so communication flows directly
+          from your device to the service in use. Disabling a feature stops
+          communication with that service, and removing your saved key removes
+          your local override.
         </p>
       </div>
 
