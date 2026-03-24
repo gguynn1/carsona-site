@@ -135,7 +135,7 @@
         <tr>
           <td><strong>Location</strong></td>
           <td>Provide GPS context for trip logging and fetch local weather conditions</td>
-          <td>Stored locally; sent to Open-Meteo only if you enable weather with your own API key</td>
+          <td>Stored locally; coordinates sent to Open-Meteo for weather context when weather features are active (no API key required)</td>
         </tr>
         <tr>
           <td><strong>Motion &amp; Fitness</strong></td>
@@ -200,13 +200,13 @@
     </table>
 
     <div class="card">
-      <p><strong>Your keys, your control.</strong> API keys are stored in your device's Keychain. Carsona has no server component — data flows directly from your device to the service you configured. Removing a key immediately stops all communication with that service.</p>
+      <p><strong>Your keys, your control.</strong> API keys are stored locally on your device. Carsona has no server component — data flows directly from your device to the service you configured. Removing a key immediately stops all communication with that service.</p>
     </div>
 
     <h2>Data Storage &amp; Security</h2>
     <ul>
       <li>All vehicle data, trip logs, and preferences are stored <strong>locally on your device</strong> using Core Data and UserDefaults.</li>
-      <li>API keys are stored in the iOS Keychain, protected by the Secure Enclave.</li>
+      <li>API keys are stored locally on your device in the app's private data directory.</li>
       <li>Carsona does not operate any backend servers, databases, or cloud storage.</li>
       <li>Uninstalling the app removes all locally stored data.</li>
     </ul>
