@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carsona — Setup Guide</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --fg: #1d1d1f;
+        --muted: #6e6e73;
+        --accent: #0071e3;
+        --border: #d2d2d7;
+        --card: #f5f5f7;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #1c1c1e;
+          --fg: #f5f5f7;
+          --muted: #98989d;
+          --accent: #2997ff;
+          --border: #38383a;
+          --card: #2c2c2e;
+        }
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
+          Helvetica, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+        line-height: 1.6;
+        -webkit-text-size-adjust: 100%;
+      }
+      .container {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 48px 24px 64px;
+      }
+      nav {
+        margin-bottom: 32px;
+        font-size: 0.85rem;
+      }
+      nav a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+      h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+      .subtitle {
+        color: var(--muted);
+        font-size: 0.95rem;
+        margin-bottom: 40px;
+      }
+      h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 36px 0 12px;
+      }
+      h3 {
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin: 24px 0 8px;
+      }
+      p,
+      li {
+        font-size: 0.95rem;
+        color: var(--fg);
+        margin-bottom: 12px;
+      }
+      ul,
+      ol {
+        padding-left: 20px;
+        margin-bottom: 16px;
+      }
+      li {
+        margin-bottom: 6px;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .prereq-card {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 12px;
+      }
+      .prereq-card h3 {
+        margin-top: 0;
+        margin-bottom: 6px;
+      }
+      .prereq-card p {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .step-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: #fff;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-right: 10px;
+        flex-shrink: 0;
+      }
+      .step-header {
+        display: flex;
+        align-items: center;
+        margin: 28px 0 10px;
+      }
+      .step-header h3 {
+        margin: 0;
+      }
+      .note {
+        background: var(--card);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 8px 8px 0;
+        padding: 14px 16px;
+        margin: 16px 0;
+        font-size: 0.9rem;
+      }
+      .note strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+      .adapter-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 12px 0 16px;
+        font-size: 0.9rem;
+      }
+      .adapter-table th,
+      .adapter-table td {
+        text-align: left;
+        padding: 10px 12px;
+        border-bottom: 1px solid var(--border);
+      }
+      .adapter-table th {
+        font-weight: 600;
+        color: var(--muted);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+      .adapter-table tr:last-child td {
+        border-bottom: none;
+      }
+      .tag {
+        display: inline-block;
+        background: var(--accent);
+        color: #fff;
+        font-size: 0.7rem;
+        font-weight: 600;
+        padding: 2px 8px;
+        border-radius: 4px;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+      .tag.warn {
+        background: #ff9500;
+      }
+      footer {
+        margin-top: 48px;
+        padding-top: 24px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav><a href="index.html">&larr; Carsona</a></nav>
+
+      <h1>Setup Guide</h1>
+      <p class="subtitle">
+        Everything you need to get Carsona running with your vehicle.
+      </p>
+
+      <!-- ───────────────── Prerequisites ───────────────── -->
+
+      <h2>Prerequisites</h2>
+
+      <div class="prereq-card">
+        <h3>&#x1F4F1; iPhone with iOS 17 or later</h3>
+        <p>
+          Carsona requires iOS 17.0+. Check your version in
+          <strong>Settings &rarr; General &rarr; About</strong>.
+        </p>
+      </div>
+
+      <div class="prereq-card">
+        <h3>&#x1F697; OBD-II compatible vehicle</h3>
+        <p>
+          All gasoline vehicles sold in the US since 1996 (and diesel since
+          1997) have a standardized OBD-II port. The port is usually located
+          under the dashboard on the driver's side.
+        </p>
+      </div>
+
+      <div class="prereq-card">
+        <h3>&#x1F4E1; Bluetooth Low Energy (BLE) ELM327 adapter</h3>
+        <p>
+          You need a BLE OBD-II adapter &mdash; not classic Bluetooth, not
+          Wi-Fi. See the recommended adapters below.
+        </p>
+      </div>
+
+      <div class="prereq-card">
+        <h3>&#x1F517; Bluetooth enabled</h3>
+        <p>
+          Bluetooth must be turned on in iOS Settings. Carsona discovers the
+          adapter directly &mdash; you do <strong>not</strong> pair it through
+          the system Bluetooth settings.
+        </p>
+      </div>
+
+      <!-- ───────────────── Adapters ───────────────── -->
+
+      <h2>Choosing an Adapter</h2>
+      <p>
+        Carsona communicates with your vehicle through a BLE ELM327 adapter
+        plugged into the OBD-II port. Most adapters marketed as &ldquo;Bluetooth
+        4.0+&rdquo; or &ldquo;BLE OBD2&rdquo; will work.
+      </p>
+
+      <table class="adapter-table">
+        <thead>
+          <tr>
+            <th>Adapter</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>OBDLink MX+ <span class="tag">Recommended</span></td>
+            <td>
+              Fast, reliable, wide vehicle compatibility. Supports both BLE and
+              classic Bluetooth.
+            </td>
+          </tr>
+          <tr>
+            <td>Vgate iCar Pro BLE</td>
+            <td>Budget-friendly and widely available. Good everyday choice.</td>
+          </tr>
+          <tr>
+            <td>Veepeak OBDCheck BLE+</td>
+            <td>Compact form factor, solid BLE performance.</td>
+          </tr>
+          <tr>
+            <td>INNOVA CarScan</td>
+            <td>
+              Included as a built-in adapter preset in Carsona. Plug and go.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="note">
+        <strong>Not compatible</strong>
+        Classic Bluetooth (non-BLE) adapters, Wi-Fi adapters, and USB adapters
+        are not supported. If your adapter appears in
+        <strong>iOS Settings &rarr; Bluetooth</strong> as a pairable device, it
+        is likely classic Bluetooth and will not work with Carsona.
+      </div>
+
+      <!-- ───────────────── First-Time Setup ───────────────── -->
+
+      <h2>First-Time Setup</h2>
+
+      <div class="step-header">
+        <span class="step-number">1</span>
+        <h3>Plug in your adapter</h3>
+      </div>
+      <p>
+        Insert the BLE adapter into your vehicle's OBD-II port and turn the
+        ignition to at least the ACC (accessory) position. Most adapters have an
+        LED that lights up when powered.
+      </p>
+
+      <div class="step-header">
+        <span class="step-number">2</span>
+        <h3>Open Carsona</h3>
+      </div>
+      <p>
+        On first launch you will see the onboarding wizard. You have two
+        options:
+      </p>
+      <ul>
+        <li>
+          <strong>Set Up Manually</strong> &mdash; walk through driver name,
+          vehicle details, and adapter selection step by step.
+        </li>
+        <li>
+          <strong>Import Configuration</strong> &mdash; load a pre-built
+          <code>.json</code> config file to skip manual entry. Great if someone
+          has shared their setup with you.
+        </li>
+      </ul>
+
+      <div class="step-header">
+        <span class="step-number">3</span>
+        <h3>Grant permissions</h3>
+      </div>
+      <p>
+        The permission pre-flight screen explains what Carsona needs and why. No
+        system dialogs are triggered until you actually use each feature:
+      </p>
+      <ul>
+        <li>
+          <strong>Bluetooth</strong> &mdash; required for adapter communication.
+        </li>
+        <li>
+          <strong>Location</strong> &mdash; used for GPS speed, altitude,
+          weather, and road context. Background location keeps tracking active
+          when the screen is off.
+        </li>
+        <li>
+          <strong>Motion &amp; Fitness</strong> &mdash; powers G-force, pitch,
+          and roll readings for event detection and the dashboard.
+        </li>
+      </ul>
+
+      <div class="step-header">
+        <span class="step-number">4</span>
+        <h3>Enter your details</h3>
+      </div>
+      <p>
+        Provide your name (used by the AI personality for greetings), then step
+        through the vehicle setup: year, make, model, and an optional VIN scan.
+        The VIN scanner uses your camera to auto-fill vehicle specs from the
+        NHTSA database.
+      </p>
+
+      <div class="step-header">
+        <span class="step-number">5</span>
+        <h3>Choose a personality</h3>
+      </div>
+      <p>
+        Pick a starter AI personality template for your vehicle. This controls
+        <em>how</em> the AI speaks &mdash; whether it's enthusiastic, calm,
+        technical, or witty. You can customize it later in
+        <strong>Settings &rarr; Personality</strong>.
+      </p>
+
+      <div class="step-header">
+        <span class="step-number">6</span>
+        <h3>Select your adapter</h3>
+      </div>
+      <p>
+        Choose the adapter preset that matches your hardware. If yours isn't
+        listed, pick the closest match &mdash; you can fine-tune the BLE
+        parameters later in <strong>Settings &rarr; OBD Adapter</strong>.
+      </p>
+
+      <div class="step-header">
+        <span class="step-number">7</span>
+        <h3>Start driving</h3>
+      </div>
+      <p>
+        Tap <strong>Open Dashboard</strong> and Carsona will begin scanning for
+        your adapter. Once connected, live telemetry appears on the dashboard in
+        real time.
+      </p>
+
+      <!-- ───────────────── Sandbox Mode ───────────────── -->
+
+      <h2>Sandbox Mode</h2>
+      <p>
+        Want to explore Carsona without a real adapter? Enable
+        <strong>Sandbox Mode</strong> in
+        <strong>Settings &rarr; Advanced Settings &rarr; Developer</strong>. It
+        simulates realistic vehicle data so you can try every feature &mdash;
+        gauges, event detection, AI remarks &mdash; without connecting to a car.
+        The app requires a restart after toggling sandbox mode.
+      </p>
+
+      <!-- ───────────────── Optional API Keys ───────────────── -->
+
+      <h2>Optional: API Keys</h2>
+      <p>
+        Carsona works fully without any cloud API keys. For additional features,
+        you can add your own keys in
+        <strong>Settings &rarr; API Keys</strong>:
+      </p>
+      <ul>
+        <li>
+          <strong>Anthropic (Claude)</strong> &mdash; enables AI-powered
+          diagnostic explanations and the conversational voice assistant.
+        </li>
+        <li>
+          <strong>ElevenLabs</strong> &mdash; natural-sounding text-to-speech
+          for AI responses (device speech is used as fallback).
+        </li>
+      </ul>
+      <p>
+        Keys are stored locally on your device and sent directly to each
+        service. Carsona does not operate an intermediary cloud service.
+      </p>
+
+      <!-- ───────────────── Troubleshooting ───────────────── -->
+
+      <h2>Troubleshooting</h2>
+
+      <h3>Adapter not found</h3>
+      <ul>
+        <li>
+          Confirm the adapter is plugged in and the vehicle ignition is on (at
+          least ACC).
+        </li>
+        <li>Verify it is a BLE adapter, not classic Bluetooth or Wi-Fi.</li>
+        <li>Check that Bluetooth is enabled in iOS Settings.</li>
+        <li>
+          If the adapter appears in
+          <strong>iOS Settings &rarr; Bluetooth</strong>,
+          <strong>forget</strong> it there &mdash; BLE devices connect through
+          the app, not through system pairing.
+        </li>
+        <li>
+          Force-quit Carsona and reopen, or toggle Bluetooth off and back on.
+        </li>
+      </ul>
+
+      <h3>No data after connecting</h3>
+      <ul>
+        <li>
+          Make sure the engine is running (not just ACC). Most OBD PIDs require
+          the engine to be on.
+        </li>
+        <li>
+          Some vehicles take a few seconds to respond to the initial ELM327
+          handshake. Wait for the status bar to turn green.
+        </li>
+        <li>
+          If the adapter preset doesn't match your hardware, try a different one
+          in <strong>Settings &rarr; OBD Adapter</strong>.
+        </li>
+      </ul>
+
+      <h3>Need more help?</h3>
+      <p>
+        Visit our <a href="support.html">Support page</a> for FAQs, or contact
+        us at
+        <a href="mailto:support@carsonaapp.com">support@carsonaapp.com</a>.
+      </p>
+
+      <!-- ───────────────── Resources ───────────────── -->
+
+      <h2>Resources</h2>
+      <p><a href="support.html">Support &amp; FAQ</a></p>
+      <p><a href="privacy.html">Privacy Policy</a></p>
+
+      <footer>
+        <p>
+          &copy; 2026 Carsona. All rights reserved. &middot;
+          <a href="privacy.html">Privacy</a> &middot;
+          <a href="support.html">Support</a> &middot;
+          <a href="index.html">Home</a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
