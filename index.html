@@ -88,7 +88,7 @@
         <div class="feature">
           <div class="feature-title">Event Detection</div>
           <div class="feature-desc">
-            39 event types: hard braking, launches, redline, cornering &mdash;
+            49 event types: hard braking, launches, redline, cornering &mdash;
             with full AI awareness and configurable thresholds.
           </div>
         </div>
@@ -346,19 +346,22 @@
         <li>
           <span>
             <strong>Mode overlay</strong> &mdash; additional rules for Road
-            Trip, Driver&rsquo;s Ed, or other assistant modes when active.
+            Trip, Chill, Night Drive, Spirited, or other assistant modes when
+            active.
           </span>
         </li>
       </ol>
 
       <div class="prose">
         <p>
-          After the personality layers, the AI also receives the last 8 spoken
+          After the personality layers, the AI also receives the last 12 spoken
           remarks with relative timestamps, so it has
           <strong>rolling memory</strong> of what it already said. A
           shape-variety detector checks the last 3 remarks for structural
           repetition and nudges the AI toward different openings when patterns
-          emerge.
+          emerge. Older spoken lines are compressed into a session-arc summary
+          that preserves trigger context (event vs idle vs conversation), drive
+          phase, road name, and event labels where available.
         </p>
       </div>
 
@@ -373,10 +376,10 @@
       <div class="highlight-card">
         <h3>Event Detection</h3>
         <p>
-          39 event types are evaluated every poll cycle (~8&nbsp;Hz). Each has a
-          configurable threshold, a per-type cooldown, and a priority level. 59
-          tunable properties are exposed in Settings, with one-tap presets (less
-          / balanced / more aggressive) for quick tuning.
+          49 event types are evaluated every poll cycle (~8&nbsp;Hz). Each has a
+          configurable threshold, a per-type cooldown, and a priority level. The
+          full threshold catalog is exposed in Settings, with one-tap presets
+          (less / balanced / more aggressive) for quick tuning.
         </p>
         <p>
           Events that fire but fall within their per-type cooldown are not
@@ -458,6 +461,12 @@
           When the drive is quiet, idle commentary fires on a mode-dependent
           schedule with &plusmn;15% jitter to feel natural:
         </p>
+        <p>
+          Silence is also a valid output. Idle opportunities can intentionally
+          resolve with no spoken line, and runtime guidance lightly steers the
+          rolling silence ratio back toward the target band if recent output has
+          become too chatty or too quiet.
+        </p>
       </div>
 
       <table class="data-table">
@@ -471,7 +480,7 @@
         <tbody>
           <tr>
             <td>Default</td>
-            <td>45s</td>
+            <td>40s</td>
             <td>
               Light &mdash; metric observations, personality, casual talk, topic
               rotation
@@ -479,13 +488,23 @@
           </tr>
           <tr>
             <td>Road Trip</td>
-            <td>40s</td>
+            <td>36s</td>
             <td>Rich &mdash; location, scenery, journey narrative</td>
           </tr>
           <tr>
-            <td>Driver&rsquo;s Ed</td>
-            <td>42s</td>
-            <td>Instructional &mdash; technique, efficiency tips</td>
+            <td>Chill</td>
+            <td>120s</td>
+            <td>Minimal &mdash; atmospheric, low-talk, no metrics</td>
+          </tr>
+          <tr>
+            <td>Night Drive</td>
+            <td>80s</td>
+            <td>Reflective &mdash; introspective, heritage-forward</td>
+          </tr>
+          <tr>
+            <td>Spirited</td>
+            <td>30s</td>
+            <td>Energized &mdash; performance-aware, engaged tone</td>
           </tr>
         </tbody>
       </table>
