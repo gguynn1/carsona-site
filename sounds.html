@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carsona — Engine Sound Guide</title>
+    <style>
+      :root {
+        --bg: #ffffff;
+        --fg: #1d1d1f;
+        --muted: #6e6e73;
+        --accent: #0071e3;
+        --border: #d2d2d7;
+        --card: #f5f5f7;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #1c1c1e;
+          --fg: #f5f5f7;
+          --muted: #98989d;
+          --accent: #2997ff;
+          --border: #38383a;
+          --card: #2c2c2e;
+        }
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
+          Helvetica, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+        line-height: 1.6;
+        -webkit-text-size-adjust: 100%;
+      }
+      .container {
+        max-width: 680px;
+        margin: 0 auto;
+        padding: 48px 24px 64px;
+      }
+      nav {
+        margin-bottom: 32px;
+        font-size: 0.85rem;
+      }
+      nav a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      nav a:hover {
+        text-decoration: underline;
+      }
+      h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 8px;
+      }
+      .subtitle {
+        color: var(--muted);
+        font-size: 0.95rem;
+        margin-bottom: 40px;
+      }
+      h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin: 36px 0 12px;
+      }
+      h3 {
+        font-size: 1.05rem;
+        font-weight: 600;
+        margin: 24px 0 8px;
+      }
+      p,
+      li {
+        font-size: 0.95rem;
+        color: var(--fg);
+        margin-bottom: 12px;
+      }
+      ul,
+      ol {
+        padding-left: 20px;
+        margin-bottom: 16px;
+      }
+      li {
+        margin-bottom: 6px;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      code {
+        font-family: "SF Mono", Menlo, monospace;
+        font-size: 0.88em;
+        background: var(--card);
+        padding: 2px 6px;
+        border-radius: 4px;
+      }
+      .mode-card {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 12px;
+      }
+      .mode-card h3 {
+        margin-top: 0;
+        margin-bottom: 6px;
+      }
+      .mode-card p {
+        margin-bottom: 0;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      .example-block {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin: 12px 0 20px;
+      }
+      .example-block .example-title {
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+      }
+      .example-block ul {
+        margin-bottom: 0;
+      }
+      .example-block li {
+        font-size: 0.88rem;
+        color: var(--muted);
+        margin-bottom: 4px;
+      }
+      .note {
+        background: var(--card);
+        border-left: 3px solid var(--accent);
+        border-radius: 0 8px 8px 0;
+        padding: 14px 16px;
+        margin: 16px 0;
+        font-size: 0.9rem;
+      }
+      .note strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+      .file-pattern {
+        font-family: "SF Mono", Menlo, monospace;
+        font-size: 0.88em;
+        background: var(--card);
+        display: block;
+        padding: 12px 16px;
+        border-radius: 8px;
+        margin: 8px 0 16px;
+        color: var(--fg);
+      }
+      footer {
+        margin-top: 48px;
+        padding-top: 24px;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.85rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <nav><a href="index.html">&larr; Carsona</a></nav>
+
+      <h1>Engine Sound Guide</h1>
+      <p class="subtitle">
+        How to import, name, and organize custom engine sounds in Carsona.
+      </p>
+
+      <!-- ───────────────── Three Modes ───────────────── -->
+
+      <h2>Three Sound Modes</h2>
+      <p>
+        Carsona plays engine audio driven by live OBD-II telemetry. You can
+        choose from three modes in
+        <strong>Settings &rarr; Engine Sound</strong>.
+      </p>
+
+      <div class="mode-card">
+        <h3>&#x1F3B9; Synthesized</h3>
+        <p>
+          No audio files needed. The app generates engine harmonics in real time
+          from RPM and throttle data. Cylinder count and timbre are
+          configurable.
+        </p>
+      </div>
+
+      <div class="mode-card">
+        <h3>&#x1F3A4; Simple Sampled (one file)</h3>
+        <p>
+          Import a single WAV or MP3 via Settings. If the filename includes an
+          RPM anchor (e.g. <code>loop_900rpm.wav</code>), that RPM is preserved;
+          otherwise the app treats it as a single sample near idle.
+        </p>
+      </div>
+
+      <div class="mode-card">
+        <h3>&#x1F3B6; Advanced Packs (multiple files)</h3>
+        <p>
+          Import multiple files with a shared prefix. Depending on the naming
+          pattern, the app creates either a <strong>classic RPM pack</strong> or
+          an <strong>ambient gear-aware pack</strong>.
+        </p>
+      </div>
+
+      <!-- ───────────────── Formats ───────────────── -->
+
+      <h2>Supported Formats</h2>
+      <ul>
+        <li>Import accepts <code>.wav</code> and <code>.mp3</code> files.</li>
+        <li>Imported files are normalized to WAV on device.</li>
+        <li>
+          Files longer than 30 seconds are trimmed to the first 30 seconds.
+        </li>
+      </ul>
+
+      <!-- ───────────────── Classic RPM Packs ───────────────── -->
+
+      <h2>Classic RPM Packs</h2>
+      <p>
+        Best for realistic engine sounds, mechanical loops, and anything that
+        should get brighter or faster with RPM. Files that share a prefix become
+        one pack.
+      </p>
+
+      <h3>Naming pattern</h3>
+      <span class="file-pattern">&lt;prefix&gt;_&lt;rpm&gt;rpm.wav</span>
+
+      <div class="example-block">
+        <div class="example-title">V8 muscle car</div>
+        <ul>
+          <li><code>v8_750rpm.wav</code> &mdash; burbling idle</li>
+          <li><code>v8_1500rpm.wav</code> &mdash; low cruise</li>
+          <li><code>v8_3000rpm.wav</code> &mdash; mid-range grunt</li>
+          <li><code>v8_5200rpm.wav</code> &mdash; top-end roar</li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="example-title">Sci-fi hoverbike</div>
+        <ul>
+          <li>
+            <code>hoverbike_700rpm.wav</code> &mdash; low electrical hum with
+            faint turbine spin
+          </li>
+          <li>
+            <code>hoverbike_1800rpm.wav</code> &mdash; more rotor whine and
+            pulse
+          </li>
+          <li>
+            <code>hoverbike_3600rpm.wav</code> &mdash; sharper plasma-like
+            harmonics
+          </li>
+          <li>
+            <code>hoverbike_5200rpm.wav</code> &mdash; high-energy futuristic
+            shriek
+          </li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="example-title">Diesel-industrial monster</div>
+        <ul>
+          <li>
+            <code>diesel_beast_650rpm.wav</code> &mdash; heavy chug and cabin
+            vibration
+          </li>
+          <li>
+            <code>diesel_beast_1400rpm.wav</code> &mdash; turbo spool enters the
+            texture
+          </li>
+          <li>
+            <code>diesel_beast_2600rpm.wav</code> &mdash; dense mechanical grind
+          </li>
+          <li>
+            <code>diesel_beast_3800rpm.wav</code> &mdash; angry boosted roar
+          </li>
+        </ul>
+      </div>
+
+      <p>
+        <strong>How it works:</strong> the app finds the nearest lower and upper
+        RPM files, crossfades between them, and varispeeds each sample to track
+        live RPM. Two to five files per pack is usually enough &mdash; include
+        idle, mid, and high RPM anchors.
+      </p>
+
+      <h3>Tips for RPM packs</h3>
+      <ul>
+        <li>Each file should sound like the engine at roughly that RPM.</li>
+        <li>Keep tonal character, background noise, and levels consistent.</li>
+        <li>Use clean, loopable recordings with no clicks at boundaries.</li>
+        <li>Avoid rhythmic content that must stay locked to a fixed tempo.</li>
+        <li>Minimal reverb and no long tails.</li>
+      </ul>
+
+      <!-- ───────────────── Ambient Packs ───────────────── -->
+
+      <h2>Ambient Gear-Aware Packs</h2>
+      <p>
+        Best for music beds, rhythmic loops, drones, and sound design that
+        should stay tempo-stable instead of pitch-shifting with RPM. Layers fade
+        in and out based on motion and estimated gear.
+      </p>
+
+      <h3>Naming pattern</h3>
+      <span class="file-pattern"
+        >&lt;prefix&gt;_stopped.wav<br />&lt;prefix&gt;_moving.wav<br />&lt;prefix&gt;_gear2.wav
+        &nbsp;(optional)<br />&lt;prefix&gt;_gear3.wav &nbsp;(optional)<br />...</span
+      >
+
+      <p>
+        Minimum pack: <code>prefix_stopped.wav</code> +
+        <code>prefix_moving.wav</code>. Add <code>gear1</code>&ndash;<code
+          >gear4</code
+        >
+        layers for extra detail.
+      </p>
+
+      <div class="example-block">
+        <div class="example-title">Midnight city drive</div>
+        <ul>
+          <li>
+            <code>midnight_city_stopped.wav</code> &mdash; airy pad, distant
+            traffic wash, soft synth bloom
+          </li>
+          <li>
+            <code>midnight_city_moving.wav</code> &mdash; steady lo-fi beat and
+            warm bass pulse
+          </li>
+          <li>
+            <code>midnight_city_gear2.wav</code> &mdash; muted hi-hat motion and
+            subtle sidechain pump
+          </li>
+          <li>
+            <code>midnight_city_gear4.wav</code> &mdash; wider shimmer and
+            brighter top-end energy
+          </li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="example-title">Electric sunrise cruiser</div>
+        <ul>
+          <li>
+            <code>sunrise_ev_stopped.wav</code> &mdash; gentle inverter hum and
+            soft glassy pad
+          </li>
+          <li>
+            <code>sunrise_ev_moving.wav</code> &mdash; smooth sequenced synth
+            bed with rolling low end
+          </li>
+          <li>
+            <code>sunrise_ev_gear2.wav</code> &mdash; brighter plucks for light
+            acceleration feel
+          </li>
+          <li>
+            <code>sunrise_ev_gear4.wav</code> &mdash; open stereo shimmer for
+            highway cruising
+          </li>
+        </ul>
+      </div>
+
+      <div class="example-block">
+        <div class="example-title">Rally documentary score</div>
+        <ul>
+          <li>
+            <code>rally_score_stopped.wav</code> &mdash; suspense drone and
+            dust-wind ambience
+          </li>
+          <li>
+            <code>rally_score_moving.wav</code> &mdash; tom pulse and repeating
+            cello ostinato
+          </li>
+          <li>
+            <code>rally_score_gear2.wav</code> &mdash; extra snare ghost notes
+            and grit
+          </li>
+          <li>
+            <code>rally_score_gear3.wav</code> &mdash; added distorted pulse and
+            tension layer
+          </li>
+        </ul>
+      </div>
+
+      <p>
+        <strong>How it works:</strong> <code>stopped</code> plays when
+        stationary, <code>moving</code> fades in as you roll, and
+        <code>gearN</code> layers add extra color for the current estimated
+        gear. Ambient packs do <em>not</em> use RPM varispeed, so tempo stays
+        locked.
+      </p>
+
+      <h3>Tips for ambient packs</h3>
+      <ul>
+        <li>Think in layers, not songs.</li>
+        <li>
+          Make <code>stopped</code> calmer and sparser;
+          <code>moving</code> fuller and more energetic.
+        </li>
+        <li>
+          Use <code>gearN</code> files as subtle intensity or color layers, not
+          full replacements.
+        </li>
+        <li>Keep all files in the same key or compatible tonal center.</li>
+        <li>
+          Prefer textures, pads, percussion beds, and filtered arps over lead
+          melodies.
+        </li>
+        <li>Keep transients controlled so crossfades feel smooth.</li>
+      </ul>
+
+      <!-- ───────────────── General Tips ───────────────── -->
+
+      <h2>General Recording &amp; Export Tips</h2>
+      <ul>
+        <li>Export clean loops with no clicks at boundaries.</li>
+        <li>Leave a little headroom &mdash; don't master too hot.</li>
+        <li>Avoid huge dynamic swings inside one file.</li>
+        <li>Keep each file focused on one role.</li>
+        <li>
+          Shorter, clean loops often work better than long, complex recordings.
+        </li>
+      </ul>
+
+      <div class="note">
+        <strong>Importing in the app</strong>
+        Go to <strong>Settings &rarr; Engine Sound &rarr; Import Audio</strong>.
+        A single file creates a simple pack. Multiple files with the same prefix
+        create an advanced pack automatically. A single import cannot mix RPM
+        names and ambient names.
+      </div>
+
+      <div class="note">
+        <strong>Missing files are safe</strong>
+        If a previously imported pack is deleted or missing, the app falls back
+        to automatic selection instead of crashing. No manual cleanup required.
+      </div>
+
+      <!-- ───────────────── Resources ───────────────── -->
+
+      <h2>Resources</h2>
+      <p><a href="setup.html">Setup Guide</a></p>
+      <p><a href="support.html">Support &amp; FAQ</a></p>
+      <p><a href="privacy.html">Privacy Policy</a></p>
+
+      <footer>
+        <p>
+          &copy; 2026 Carsona. All rights reserved. &middot;
+          <a href="privacy.html">Privacy</a> &middot;
+          <a href="support.html">Support</a> &middot;
+          <a href="index.html">Home</a>
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

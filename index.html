@@ -1,146 +1,974 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carsona — Your Vehicle Dashboard</title>
-  <style>
-    :root {
-      --bg: #ffffff;
-      --fg: #1d1d1f;
-      --muted: #6e6e73;
-      --accent: #0071e3;
-      --border: #d2d2d7;
-      --card: #f5f5f7;
-    }
-    @media (prefers-color-scheme: dark) {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carsona — Live OBD-II Dashboard for iOS</title>
+    <style>
       :root {
-        --bg: #1c1c1e;
-        --fg: #f5f5f7;
-        --muted: #98989d;
-        --accent: #2997ff;
-        --border: #38383a;
-        --card: #2c2c2e;
+        --bg: #ffffff;
+        --fg: #1d1d1f;
+        --muted: #6e6e73;
+        --accent: #0071e3;
+        --border: #d2d2d7;
+        --card: #f5f5f7;
+        --green: #34c759;
       }
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--fg);
-      line-height: 1.6;
-      -webkit-text-size-adjust: 100%;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    .hero {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 64px 24px;
-      text-align: center;
-    }
-    .hero-inner { max-width: 520px; }
-    .logo {
-      font-size: 3rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 4px;
-    }
-    .tagline {
-      font-size: 1.15rem;
-      color: var(--muted);
-      margin-bottom: 32px;
-    }
-    .description {
-      font-size: 0.95rem;
-      color: var(--fg);
-      margin-bottom: 40px;
-      line-height: 1.7;
-    }
-    .features {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 40px;
-      text-align: left;
-    }
-    @media (max-width: 480px) {
-      .features { grid-template-columns: 1fr; }
-    }
-    .feature {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 16px 18px;
-    }
-    .feature-title {
-      font-weight: 600;
-      font-size: 0.9rem;
-      margin-bottom: 4px;
-    }
-    .feature-desc {
-      font-size: 0.82rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .links {
-      display: flex;
-      gap: 24px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .links a {
-      color: var(--accent);
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-    }
-    .links a:hover { text-decoration: underline; }
-    footer {
-      padding: 24px;
-      text-align: center;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 0.82rem;
-    }
-  </style>
-</head>
-<body>
-  <main class="hero">
-    <div class="hero-inner">
-      <h1 class="logo">Carsona</h1>
-      <p class="tagline">Your vehicle, at a glance.</p>
-      <p class="description">A local-first OBD-II dashboard for iOS. Connect a Bluetooth adapter, see live engine data, track trips, and get AI-powered diagnostics — all without creating an account or sharing your data.</p>
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #1c1c1e;
+          --fg: #f5f5f7;
+          --muted: #98989d;
+          --accent: #2997ff;
+          --border: #38383a;
+          --card: #2c2c2e;
+          --green: #30d158;
+        }
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
+          Helvetica, Arial, sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+        line-height: 1.6;
+        -webkit-text-size-adjust: 100%;
+      }
+
+      /* ── Hero ─────────────────────────────────────── */
+      .hero {
+        text-align: center;
+        padding: 72px 24px 48px;
+      }
+      .hero-inner {
+        max-width: 620px;
+        margin: 0 auto;
+      }
+      .logo {
+        font-size: 3.2rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        margin-bottom: 4px;
+      }
+      .tagline {
+        font-size: 1.2rem;
+        color: var(--muted);
+        margin-bottom: 24px;
+      }
+      .description {
+        font-size: 1rem;
+        color: var(--fg);
+        line-height: 1.75;
+        margin-bottom: 12px;
+      }
+      .design-intent {
+        font-size: 0.92rem;
+        font-style: italic;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      /* ── Container ────────────────────────────────── */
+      .container {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 0 24px 64px;
+      }
+
+      /* ── Section Headings ─────────────────────────── */
+      .section-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        margin: 56px 0 8px;
+        text-align: center;
+      }
+      .section-subtitle {
+        font-size: 0.92rem;
+        color: var(--muted);
+        text-align: center;
+        margin-bottom: 24px;
+        max-width: 560px;
+        margin-left: auto;
+        margin-right: auto;
+        line-height: 1.6;
+      }
+
+      /* ── Feature Grid ─────────────────────────────── */
+      .features {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        text-align: left;
+      }
+      @media (max-width: 520px) {
+        .features {
+          grid-template-columns: 1fr;
+        }
+      }
+      .feature {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 18px 20px;
+      }
+      .feature-title {
+        font-weight: 600;
+        font-size: 0.92rem;
+        margin-bottom: 4px;
+      }
+      .feature-desc {
+        font-size: 0.84rem;
+        color: var(--muted);
+        line-height: 1.5;
+      }
+
+      /* ── Prose Sections ───────────────────────────── */
+      .prose {
+        margin-top: 20px;
+      }
+      .prose p {
+        font-size: 0.93rem;
+        color: var(--fg);
+        margin-bottom: 14px;
+        line-height: 1.7;
+      }
+      .prose strong {
+        font-weight: 600;
+      }
+
+      /* ── Highlight Card ───────────────────────────── */
+      .highlight-card {
+        background: var(--card);
+        border-radius: 16px;
+        padding: 28px 32px;
+        margin: 24px 0;
+      }
+      .highlight-card h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 12px;
+      }
+      .highlight-card p {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 10px;
+        line-height: 1.65;
+      }
+      .highlight-card p:last-child {
+        margin-bottom: 0;
+      }
+
+      /* ── Ordered Steps ────────────────────────────── */
+      .prompt-order {
+        counter-reset: step;
+        list-style: none;
+        padding: 0;
+        margin: 20px 0 0;
+      }
+      .prompt-order li {
+        counter-increment: step;
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 14px;
+        font-size: 0.9rem;
+        color: var(--fg);
+        line-height: 1.55;
+      }
+      .prompt-order li::before {
+        content: counter(step);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--accent);
+        color: #fff;
+        font-size: 0.78rem;
+        font-weight: 700;
+        margin-top: 1px;
+      }
+      .prompt-order li strong {
+        font-weight: 600;
+      }
+
+      /* ── Data Tables ──────────────────────────────── */
+      .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0 24px;
+        font-size: 0.88rem;
+      }
+      .data-table th,
+      .data-table td {
+        text-align: left;
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--border);
+      }
+      .data-table th {
+        font-weight: 600;
+        color: var(--muted);
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        background: var(--card);
+      }
+      .data-table td {
+        color: var(--fg);
+      }
+      .data-table tr:last-child td {
+        border-bottom: none;
+      }
+
+      /* ── Dual Path Cards ──────────────────────────── */
+      .dual-paths {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin: 20px 0;
+      }
+      @media (max-width: 520px) {
+        .dual-paths {
+          grid-template-columns: 1fr;
+        }
+      }
+      .path-card {
+        background: var(--card);
+        border-radius: 12px;
+        padding: 22px 24px;
+      }
+      .path-card h4 {
+        font-size: 0.95rem;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      .path-card p {
+        font-size: 0.86rem;
+        color: var(--muted);
+        line-height: 1.55;
+        margin-bottom: 0;
+      }
+
+      /* ── Spec Badges ──────────────────────────────── */
+      .specs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-top: 28px;
+      }
+      .spec {
+        background: var(--card);
+        border-radius: 20px;
+        padding: 8px 16px;
+        font-size: 0.82rem;
+        font-weight: 500;
+        color: var(--fg);
+        white-space: nowrap;
+      }
+      .spec strong {
+        font-weight: 700;
+      }
+
+      /* ── Privacy Card ─────────────────────────────── */
+      .privacy-card {
+        background: var(--card);
+        border-radius: 16px;
+        padding: 28px 32px;
+        margin-top: 28px;
+        text-align: center;
+      }
+      .privacy-card h3 {
+        font-size: 1.05rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+      }
+      .privacy-card p {
+        font-size: 0.9rem;
+        color: var(--muted);
+        margin-bottom: 6px;
+        line-height: 1.6;
+      }
+      .privacy-card p:last-child {
+        margin-bottom: 0;
+      }
+      .privacy-list {
+        list-style: none;
+        padding: 0;
+        margin: 12px 0 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 20px;
+        justify-content: center;
+        font-size: 0.84rem;
+        color: var(--muted);
+      }
+      .privacy-list li::before {
+        content: "\2713\00a0";
+        color: var(--green);
+        font-weight: 700;
+      }
+
+      /* ── Links ────────────────────────────────────── */
+      .links {
+        display: flex;
+        gap: 24px;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 48px;
+      }
+      .links a {
+        color: var(--accent);
+        text-decoration: none;
+        font-size: 0.95rem;
+        font-weight: 500;
+      }
+      .links a:hover {
+        text-decoration: underline;
+      }
+
+      /* ── Footer ───────────────────────────────────── */
+      footer {
+        padding: 24px;
+        text-align: center;
+        border-top: 1px solid var(--border);
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+      footer a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+      footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ═══════════════════ Hero ═══════════════════ -->
+    <header class="hero">
+      <div class="hero-inner">
+        <h1 class="logo">Carsona</h1>
+        <p class="tagline">Live OBD-II dashboard for iOS</p>
+        <p class="description">
+          Connect a Bluetooth Low Energy adapter to your car&rsquo;s OBD-II port
+          and get a real-time driving dashboard on your iPhone &mdash; live
+          telemetry, G-force visualization, event detection, vehicle
+          diagnostics, and an AI personality that rides along like an attentive
+          passenger.
+        </p>
+        <p class="design-intent">
+          &ldquo;The AI should feel like a passenger who is paying attention,
+          not a notification system that fires on thresholds.&rdquo;
+        </p>
+      </div>
+    </header>
+
+    <div class="container">
+      <!-- ═══════════════ Capabilities ═══════════════ -->
+      <h2 class="section-title">Capabilities at a Glance</h2>
 
       <div class="features">
         <div class="feature">
-          <div class="feature-title">Live Diagnostics</div>
-          <div class="feature-desc">Real-time engine data from your OBD-II port via Bluetooth LE.</div>
+          <div class="feature-title">Live OBD-II Telemetry</div>
+          <div class="feature-desc">
+            RPM, speed, temps, fuel, load, throttle &mdash; 30+ PIDs in
+            real-time.
+          </div>
         </div>
         <div class="feature">
-          <div class="feature-title">AI Assistant</div>
-          <div class="feature-desc">Voice-activated diagnostics powered by your own API key.</div>
+          <div class="feature-title">Tachometer &amp; Gauges</div>
+          <div class="feature-desc">
+            A real driving dashboard on your phone with a 270&deg; tachometer.
+          </div>
         </div>
         <div class="feature">
-          <div class="feature-title">Trip Logging</div>
-          <div class="feature-desc">GPS-tracked drives with weather context and G-force data.</div>
+          <div class="feature-title">G-Force Visualization</div>
+          <div class="feature-desc">
+            Lateral, longitudinal, and vertical forces live with configurable
+            phone mount orientation.
+          </div>
         </div>
         <div class="feature">
-          <div class="feature-title">Privacy First</div>
-          <div class="feature-desc">No accounts, no analytics, no cloud. Your data stays on your device.</div>
+          <div class="feature-title">Gear Estimation</div>
+          <div class="feature-desc">
+            Knows what gear you&rsquo;re in from the RPM/speed math or directly
+            from the ECU.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Derived Performance</div>
+          <div class="feature-desc">
+            Wheel HP, torque, MPG, boost, air density, DTE &mdash; all computed
+            live, metric/imperial aware.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Event Detection</div>
+          <div class="feature-desc">
+            39 event types: hard braking, launches, redline, cornering &mdash;
+            with full AI awareness and configurable thresholds.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">AI Personality</div>
+          <div class="feature-desc">
+            Your car talks. It has opinions. It remembers the drive &mdash; and
+            knows what happened even when it stayed quiet.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Two-Way Voice</div>
+          <div class="feature-desc">
+            Push-to-talk plus a foreground hands-free wake-phrase beta for quick
+            driving questions.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Engine Sound Synthesis</div>
+          <div class="feature-desc">
+            Hear your engine through harmonic synthesis, classic RPM packs, or
+            gear-aware ambient sampled packs.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Vehicle Profiles</div>
+          <div class="feature-desc">
+            Multiple cars, each with its own personality, drivetrain, and
+            settings.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Service History Hub</div>
+          <div class="feature-desc">
+            Maintenance log, wishlist, and recalls in one tabbed view with
+            category icons and odometer tracking.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Vehicle Diagnostics</div>
+          <div class="feature-desc">
+            On-demand DTC snapshots (stored, pending, permanent) and I/M
+            readiness monitor status.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Document Upload + AI</div>
+          <div class="feature-desc">
+            Upload CARFAX, receipts, or inspection reports &mdash; AI extracts
+            entries across all categories.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">NHTSA Recall Lookup</div>
+          <div class="feature-desc">
+            One-tap safety recall check from the public NHTSA API.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Dynamic Island</div>
+          <div class="feature-desc">
+            Glanceable telemetry on the lock screen via ActivityKit.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">VIN Scanner</div>
+          <div class="feature-desc">
+            Point your camera at the VIN to auto-fill identity, then optionally
+            supplement with AI.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Advanced Tuning Presets</div>
+          <div class="feature-desc">
+            One-tap less / balanced / more aggressive presets for AI timing and
+            detection thresholds, plus mix presets.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Field Guide</div>
+          <div class="feature-desc">
+            Built-in PID and metric reference with unit-aware explanations.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Config Export &amp; Import</div>
+          <div class="feature-desc">
+            Share your full setup as a JSON file &mdash; profiles, thresholds,
+            personalities, and all.
+          </div>
+        </div>
+        <div class="feature">
+          <div class="feature-title">Sandbox Mode</div>
+          <div class="feature-desc">
+            Test every feature without a car. Simulated scenarios exercise AI,
+            events, and the full dashboard.
+          </div>
         </div>
       </div>
 
+      <!-- ═══════════════ Metric Normalization ═══════════════ -->
+      <h2 class="section-title">How Data Reaches the Dashboard</h2>
+      <p class="section-subtitle">
+        Carsona fuses data from four independent sources running at different
+        speeds, then normalizes everything into a single coherent snapshot
+        before events or the AI ever see it.
+      </p>
+
+      <div class="prose">
+        <p>
+          <strong>OBD-II (via BLE)</strong> delivers the core engine data
+          &mdash; RPM and speed arrive together at roughly 8&nbsp;Hz.
+          Twenty-nine secondary PIDs (coolant, intake temp, fuel status, MAF,
+          and more) each refresh on a rotating schedule, so the full picture
+          updates continuously without overwhelming the adapter.
+        </p>
+        <p>
+          <strong>Device sensors</strong> run at 20&nbsp;Hz for G-force and jerk
+          via CoreMotion, plus ~1&nbsp;Hz for GPS position, speed, heading, and
+          altitude. A phone-mount orientation setting transforms raw
+          accelerometer axes into vehicle-frame lateral, longitudinal, and
+          vertical G-forces &mdash; so the reading is correct regardless of how
+          your phone is mounted.
+        </p>
+        <p>
+          <strong>Weather &amp; location</strong> are fetched via Open-Meteo
+          (temperature, humidity, wind, conditions) and Apple reverse geocoding
+          (road names, city context). In Road Trip mode, nearby landmarks are
+          discovered through MapKit for richer AI commentary.
+        </p>
+        <p>
+          Because the event detector evaluates at ~8&nbsp;Hz but motion sensors
+          sample at 20&nbsp;Hz, Carsona uses <strong>peak-hold tracking</strong>
+          &mdash; the highest G-force magnitude between evaluations is captured
+          and drained, so brief spikes (hard brake, pothole) are never lost
+          between polls. Every reading is timestamped and checked for freshness
+          before cross-source comparisons happen.
+        </p>
+      </div>
+
+      <!-- ═══════════════ Two Commentary Paths ═══════════════ -->
+      <h2 class="section-title">Two Commentary Paths</h2>
+      <p class="section-subtitle">
+        The AI doesn&rsquo;t just react to events &mdash; it also speaks up
+        during quiet stretches when it has something interesting to say.
+      </p>
+
+      <div class="dual-paths">
+        <div class="path-card">
+          <h4>Event-Driven Path</h4>
+          <p>
+            When something happens &mdash; hard braking, a launch, cornering,
+            altitude change &mdash; nearby events are buffered into a
+            &ldquo;moment,&rdquo; grouped, and processed as a single compound
+            remark. Three events in quick succession become one observation, not
+            three separate interruptions.
+          </p>
+        </div>
+        <div class="path-card">
+          <h4>Idle Commentary Path</h4>
+          <p>
+            After a configurable quiet period with no remark spoken, the AI
+            draws from full metric state, weather, location, and vehicle context
+            to find something interesting to say unprompted &mdash; scenery,
+            weather changes, driving stats, or just personality.
+          </p>
+        </div>
+      </div>
+
+      <div class="prose">
+        <p>
+          Both paths share the same prompt pipeline and speech output, so the
+          AI&rsquo;s voice and personality remain consistent whether it&rsquo;s
+          reacting to a redline pull or musing about the sunset during a highway
+          cruise.
+        </p>
+      </div>
+
+      <!-- ═══════════════ Personality-First Prompts ═══════════════ -->
+      <h2 class="section-title">Personality-First Prompt Architecture</h2>
+      <p class="section-subtitle">
+        Every prompt Carsona sends to the AI starts with
+        <em>who the car is</em>, not what just happened. Character comes first,
+        data comes second. This is the order the AI sees on every single remark.
+      </p>
+
+      <ol class="prompt-order">
+        <li>
+          <span>
+            <strong>Character opening</strong> &mdash; the personality
+            description you chose (or a generic vehicle-assistant fallback).
+          </span>
+        </li>
+        <li>
+          <span>
+            <strong>Voice baseline</strong> &mdash; core attentive-passenger
+            persona, humor guidelines, and the rule that humor drops when a real
+            safety warning matters.
+          </span>
+        </li>
+        <li>
+          <span>
+            <strong>Profile traits</strong> &mdash; the personality traits you
+            configured, framed as &ldquo;Your character adds:&rdquo;
+          </span>
+        </li>
+        <li>
+          <span>
+            <strong>Speech habits</strong> &mdash; core quirks plus any
+            vehicle-specific quirks from the personality config (e.g. how the
+            car references its own engine or heritage).
+          </span>
+        </li>
+        <li>
+          <span>
+            <strong>Boundaries</strong> &mdash; safety rules, anti-distraction
+            guardrails, and any custom boundaries you&rsquo;ve set.
+          </span>
+        </li>
+        <li>
+          <span>
+            <strong>Vehicle specs</strong> &mdash; the car&rsquo;s own specs
+            presented as self-knowledge, so the AI can reference its own
+            horsepower, weight, or drivetrain naturally.
+          </span>
+        </li>
+        <li>
+          <span>
+            <strong>Tone layering</strong> &mdash; additional tone guidance when
+            configured (warm, sarcastic, technical, etc.).
+          </span>
+        </li>
+        <li>
+          <span>
+            <strong>Driver name</strong> &mdash; woven into the greeting
+            naturally, not bolted on.
+          </span>
+        </li>
+        <li>
+          <span>
+            <strong>Few-shot examples</strong> &mdash; sample remarks from the
+            personality config that show the AI exactly how this character
+            sounds.
+          </span>
+        </li>
+        <li>
+          <span>
+            <strong>Compact rules</strong> &mdash; brevity targets,
+            anti-recitation, safety reminders, and shape-variety guidance to
+            prevent repetitive structure.
+          </span>
+        </li>
+        <li>
+          <span>
+            <strong>Mode overlay</strong> &mdash; additional rules for Road
+            Trip, Driver&rsquo;s Ed, or other assistant modes when active.
+          </span>
+        </li>
+      </ol>
+
+      <div class="prose">
+        <p>
+          After the personality layers, the AI also receives the last 8 spoken
+          remarks with relative timestamps, so it has
+          <strong>rolling memory</strong> of what it already said. A
+          shape-variety detector checks the last 3 remarks for structural
+          repetition and nudges the AI toward different openings when patterns
+          emerge.
+        </p>
+      </div>
+
+      <!-- ═══════════════ AI System ═══════════════ -->
+      <h2 class="section-title">AI System &amp; Event Engine</h2>
+      <p class="section-subtitle">
+        Events are detected, grouped, budgeted, and triaged before the AI ever
+        sees them. The system adapts its pace to your driving style in real
+        time.
+      </p>
+
+      <div class="highlight-card">
+        <h3>Event Detection</h3>
+        <p>
+          39 event types are evaluated every poll cycle (~8&nbsp;Hz). Each has a
+          configurable threshold, a per-type cooldown, and a priority level. 59
+          tunable properties are exposed in Settings, with one-tap presets (less
+          / balanced / more aggressive) for quick tuning.
+        </p>
+        <p>
+          Events that fire but fall within their per-type cooldown are not
+          discarded &mdash; they enter a <strong>shadow buffer</strong> and are
+          still reported to the AI as &ldquo;things that happened but I stayed
+          quiet about.&rdquo;
+        </p>
+      </div>
+
+      <div class="highlight-card">
+        <h3>Event Grouping &amp; Budget</h3>
+        <p>
+          Events that occur within a short window (default 300&nbsp;ms) are
+          grouped into a single &ldquo;moment&rdquo; and processed as one
+          compound remark. Three events in quick succession cost one budget
+          slot, not three. Critical events bypass the buffer entirely.
+        </p>
+        <p>
+          A <strong>dynamic budget</strong> adapts remark frequency to driving
+          intensity:
+        </p>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Driving Style</th>
+            <th>Budget / Min</th>
+            <th>Cooldown Floor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Calm</td>
+            <td>4 / min</td>
+            <td>12s</td>
+          </tr>
+          <tr>
+            <td>Normal</td>
+            <td>8 / min</td>
+            <td>8s</td>
+          </tr>
+          <tr>
+            <td>Spirited</td>
+            <td>12 / min</td>
+            <td>3s</td>
+          </tr>
+          <tr>
+            <td>Burst</td>
+            <td>16 / min</td>
+            <td>2s</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-card">
+        <h3>AI Awareness Context</h3>
+        <p>
+          Every prompt includes a full awareness context &mdash; not just the
+          triggering event, but everything that happened since the last remark:
+        </p>
+        <p>
+          <strong>Event digest</strong> &mdash; timestamped list of all
+          dispatched events since the last remark.<br />
+          <strong>Suppressed events</strong> &mdash; events absorbed by
+          cooldowns or blocked by budget, with reasons.<br />
+          <strong>Metric deltas</strong> &mdash; notable changes in speed, RPM,
+          coolant, fuel, altitude, gear, and load since last time.<br />
+          <strong>Event velocity</strong> &mdash; events per minute in a rolling
+          60-second window.<br />
+          <strong>Session counts</strong> &mdash; per-type totals enabling
+          callbacks like &ldquo;that&rsquo;s your 5th hard brake.&rdquo;
+        </p>
+      </div>
+
+      <div class="highlight-card">
+        <h3>Idle Commentary Cadence</h3>
+        <p>
+          When the drive is quiet, idle commentary fires on a mode-dependent
+          schedule with &plusmn;15% jitter to feel natural:
+        </p>
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Mode</th>
+            <th>Interval</th>
+            <th>Commentary Style</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Default</td>
+            <td>45s</td>
+            <td>
+              Light &mdash; metric observations, personality, casual talk, topic
+              rotation
+            </td>
+          </tr>
+          <tr>
+            <td>Road Trip</td>
+            <td>40s</td>
+            <td>Rich &mdash; location, scenery, journey narrative</td>
+          </tr>
+          <tr>
+            <td>Driver&rsquo;s Ed</td>
+            <td>42s</td>
+            <td>Instructional &mdash; technique, efficiency tips</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight-card">
+        <h3>Drive Phase Classification</h3>
+        <p>
+          The AI knows what phase of the drive you&rsquo;re in. Nine phases are
+          tracked in real time:
+        </p>
+        <p>
+          <strong>Cold Start</strong> (first ~90s, near zero speed) &rarr;
+          <strong>Departure</strong> (first ~3 min, building speed) &rarr;
+          <strong>City</strong> (15&ndash;50 mph, varied throttle) &rarr;
+          <strong>Highway</strong> (&gt;55 mph, steady) &rarr;
+          <strong>Spirited</strong> (high spirited index) &rarr;
+          <strong>Traffic</strong> (low avg speed, oscillations) &rarr;
+          <strong>Cruising</strong> (steady, minimal input) &rarr;
+          <strong>Arriving</strong> (decelerating toward zero) &rarr;
+          <strong>Parked</strong> (stationary, engine running).
+        </p>
+      </div>
+
+      <!-- ═══════════════ Communication Protocols ═══════════════ -->
+      <h2 class="section-title">What Carsona Connects To</h2>
+      <p class="section-subtitle">
+        Everything Carsona talks to, and why. No hidden connections &mdash;
+        optional cloud features only activate with your keys or explicit opt-in.
+      </p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>What &amp; Why</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>OBD-II via BLE</strong></td>
+            <td>
+              ELM327 adapter communication &mdash; read-only Mode 01 live data
+              plus Mode 03/07/0A for diagnostic trouble codes. Carsona never
+              writes to your vehicle.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Open-Meteo</strong></td>
+            <td>
+              Live weather data (temperature, humidity, wind, conditions). Free,
+              no API key required. GPS coordinates sent directly.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Apple Geocoding</strong></td>
+            <td>
+              Reverse geocode for road names and city context. Apple MapKit for
+              nearby landmarks in Road Trip mode.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>NHTSA</strong></td>
+            <td>
+              VIN decode for vehicle identity (free, no key) and safety recall
+              lookup by year/make/model.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>EPA</strong></td>
+            <td>
+              Fuel economy and tank size lookup by year/make/model (free, no
+              key). Also provides transmission and drivetrain info.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Anthropic (Claude)</strong></td>
+            <td>
+              AI personality remarks, conversational replies, vehicle spec
+              enrichment, and document parsing. Optional &mdash; requires an API
+              key.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>ElevenLabs</strong></td>
+            <td>
+              Cloud text-to-speech for natural-sounding AI voice. Optional
+              &mdash; device speech is always available as fallback.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Engine Audio</strong></td>
+            <td>
+              Entirely on-device via AVAudioEngine. No network. Supports
+              synthesized harmonics, classic RPM packs, and ambient sampled
+              packs.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Dynamic Island</strong></td>
+            <td>
+              Live Activity on lock screen via ActivityKit. On-device only.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ═══════════════ OBD Safety ═══════════════ -->
+      <div class="highlight-card" style="text-align: center">
+        <h3>Read-Only OBD Safety</h3>
+        <p>
+          Carsona <strong>never writes to your car&rsquo;s ECU</strong>. It uses
+          OBD Mode 01 for live data and Modes 03/07/0A for reading diagnostic
+          codes. Mode 04 (clear DTCs) is permanently prohibited. No UDS
+          commands, no actuator tests, no ECU modifications. Voice commands are
+          strictly read-only through an allowlist, not a blocklist.
+        </p>
+      </div>
+
+      <!-- ═══════════════ Specs ═══════════════ -->
+      <div class="specs">
+        <span class="spec">iOS <strong>17+</strong></span>
+        <span class="spec">iPhone only</span>
+        <span class="spec"><strong>Swift</strong> &amp; SwiftUI</span>
+        <span class="spec">No external packages</span>
+        <span class="spec"><strong>BLE</strong> ELM327</span>
+        <span class="spec">Read-only OBD</span>
+      </div>
+
+      <!-- ═══════════════ Privacy ═══════════════ -->
+      <div class="privacy-card">
+        <h3>Privacy First</h3>
+        <p>
+          Carsona is local-first. Your vehicle data, trip logs, and preferences
+          stay on your device. Optional cloud features (AI, voice) use your own
+          API keys and connect directly &mdash; Carsona has no backend.
+        </p>
+        <ul class="privacy-list">
+          <li>No user accounts</li>
+          <li>No analytics or tracking</li>
+          <li>No crash-reporting SDKs</li>
+          <li>No data brokers</li>
+          <li>Uninstall deletes everything</li>
+        </ul>
+      </div>
+
+      <!-- ═══════════════ Links ═══════════════ -->
       <div class="links">
+        <a href="setup.html">Setup Guide</a>
+        <a href="sounds.html">Engine Sounds</a>
         <a href="support.html">Support &amp; FAQ</a>
         <a href="privacy.html">Privacy Policy</a>
       </div>
     </div>
-  </main>
-  <footer>
-    <p>&copy; 2026 Carsona. All rights reserved.</p>
-  </footer>
-</body>
+
+    <footer>
+      <p>
+        &copy; 2026 Carsona. All rights reserved. &middot;
+        <a href="privacy.html">Privacy</a> &middot;
+        <a href="support.html">Support</a>
+      </p>
+    </footer>
+  </body>
 </html>
