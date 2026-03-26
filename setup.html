@@ -4,195 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Carsona — Setup Guide</title>
-    <style>
-      :root {
-        --bg: #ffffff;
-        --fg: #1d1d1f;
-        --muted: #6e6e73;
-        --accent: #0071e3;
-        --border: #d2d2d7;
-        --card: #f5f5f7;
-      }
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --bg: #1c1c1e;
-          --fg: #f5f5f7;
-          --muted: #98989d;
-          --accent: #2997ff;
-          --border: #38383a;
-          --card: #2c2c2e;
-        }
-      }
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-      body {
-        font-family:
-          -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
-          Helvetica, Arial, sans-serif;
-        background: var(--bg);
-        color: var(--fg);
-        line-height: 1.6;
-        -webkit-text-size-adjust: 100%;
-      }
-      .container {
-        max-width: 680px;
-        margin: 0 auto;
-        padding: 48px 24px 64px;
-      }
-      nav {
-        margin-bottom: 32px;
-        font-size: 0.85rem;
-      }
-      nav a {
-        color: var(--accent);
-        text-decoration: none;
-      }
-      nav a:hover {
-        text-decoration: underline;
-      }
-      h1 {
-        font-size: 2rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        margin-bottom: 8px;
-      }
-      .subtitle {
-        color: var(--muted);
-        font-size: 0.95rem;
-        margin-bottom: 40px;
-      }
-      h2 {
-        font-size: 1.25rem;
-        font-weight: 600;
-        margin: 36px 0 12px;
-      }
-      h3 {
-        font-size: 1.05rem;
-        font-weight: 600;
-        margin: 24px 0 8px;
-      }
-      p,
-      li {
-        font-size: 0.95rem;
-        color: var(--fg);
-        margin-bottom: 12px;
-      }
-      ul,
-      ol {
-        padding-left: 20px;
-        margin-bottom: 16px;
-      }
-      li {
-        margin-bottom: 6px;
-      }
-      a {
-        color: var(--accent);
-        text-decoration: none;
-      }
-      a:hover {
-        text-decoration: underline;
-      }
-      .prereq-card {
-        background: var(--card);
-        border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 12px;
-      }
-      .prereq-card h3 {
-        margin-top: 0;
-        margin-bottom: 6px;
-      }
-      .prereq-card p {
-        margin-bottom: 0;
-        color: var(--muted);
-        font-size: 0.9rem;
-      }
-      .step-number {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 28px;
-        height: 28px;
-        border-radius: 50%;
-        background: var(--accent);
-        color: #fff;
-        font-size: 0.85rem;
-        font-weight: 600;
-        margin-right: 10px;
-        flex-shrink: 0;
-      }
-      .step-header {
-        display: flex;
-        align-items: center;
-        margin: 28px 0 10px;
-      }
-      .step-header h3 {
-        margin: 0;
-      }
-      .note {
-        background: var(--card);
-        border-left: 3px solid var(--accent);
-        border-radius: 0 8px 8px 0;
-        padding: 14px 16px;
-        margin: 16px 0;
-        font-size: 0.9rem;
-      }
-      .note strong {
-        display: block;
-        margin-bottom: 4px;
-      }
-      .adapter-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin: 12px 0 16px;
-        font-size: 0.9rem;
-      }
-      .adapter-table th,
-      .adapter-table td {
-        text-align: left;
-        padding: 10px 12px;
-        border-bottom: 1px solid var(--border);
-      }
-      .adapter-table th {
-        font-weight: 600;
-        color: var(--muted);
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        letter-spacing: 0.03em;
-      }
-      .adapter-table tr:last-child td {
-        border-bottom: none;
-      }
-      .tag {
-        display: inline-block;
-        background: var(--accent);
-        color: #fff;
-        font-size: 0.7rem;
-        font-weight: 600;
-        padding: 2px 8px;
-        border-radius: 4px;
-        text-transform: uppercase;
-        letter-spacing: 0.03em;
-      }
-      .tag.warn {
-        background: #ff9500;
-      }
-      footer {
-        margin-top: 48px;
-        padding-top: 24px;
-        border-top: 1px solid var(--border);
-        color: var(--muted);
-        font-size: 0.85rem;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <nav><a href="index.html">&larr; Carsona</a></nav>
+    <!-- ═══════════════════ Site Nav ═══════════════════ -->
+    <nav class="site-nav">
+      <div class="nav-inner">
+        <a href="index.html" class="nav-logo">Carsona</a>
+        <div class="nav-links" id="navLinks">
+          <a href="setup.html" class="active">Setup</a>
+          <a href="sounds.html">Sounds</a>
+          <a href="support.html">Support</a>
+          <a href="privacy.html">Privacy</a>
+        </div>
+        <button
+          class="nav-toggle"
+          id="navToggle"
+          aria-label="Toggle navigation"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
 
+    <div class="page-container">
       <h1>Setup Guide</h1>
       <p class="subtitle">
         Everything you need to get Carsona running with your vehicle.
@@ -464,21 +299,31 @@
         us at
         <a href="mailto:support@carsonaapp.com">support@carsonaapp.com</a>.
       </p>
-
-      <!-- ───────────────── Resources ───────────────── -->
-
-      <h2>Resources</h2>
-      <p><a href="support.html">Support &amp; FAQ</a></p>
-      <p><a href="privacy.html">Privacy Policy</a></p>
-
-      <footer>
-        <p>
-          &copy; 2026 Carsona. All rights reserved. &middot;
-          <a href="privacy.html">Privacy</a> &middot;
-          <a href="support.html">Support</a> &middot;
-          <a href="index.html">Home</a>
-        </p>
-      </footer>
     </div>
+
+    <!-- ═══════════════════ Footer ═══════════════════ -->
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <div class="footer-links">
+          <a href="index.html">Home</a>
+          <a href="setup.html">Setup Guide</a>
+          <a href="sounds.html">Engine Sounds</a>
+          <a href="support.html">Support &amp; FAQ</a>
+          <a href="privacy.html">Privacy Policy</a>
+        </div>
+        <p class="footer-copy">&copy; 2026 Carsona. All rights reserved.</p>
+        <p class="footer-contact">
+          <a href="mailto:support@carsonaapp.com">support@carsonaapp.com</a>
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      document
+        .getElementById("navToggle")
+        .addEventListener("click", function () {
+          document.getElementById("navLinks").classList.toggle("open");
+        });
+    </script>
   </body>
 </html>
