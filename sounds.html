@@ -61,11 +61,13 @@
       </div>
 
       <div class="mode-card">
-        <h3>&#x1F3B6; Sound Drive (Beta)</h3>
+        <h3>&#x1F3B6; Sound Drive</h3>
         <p>
-          Multi-stem music tracks whose volumes are modulated by driving
-          dynamics &mdash; lateral G, braking, speed, RPM, and cornering
-          intensity. No pitch-shifting; tempo stays locked.
+          Scene-based adaptive music engine. Multi-stem tracks (up to 8 roles)
+          whose arrangement is driven by user-authored scenes &mdash; triggers
+          based on speed, RPM, G-force, and other driving signals select which
+          stems play. Transitions land on quantized beat or bar boundaries. No
+          pitch-shifting; tempo stays locked.
         </p>
       </div>
 
@@ -170,138 +172,258 @@
 
       <!-- ───────────────── Sound Drive Packs ───────────────── -->
 
-      <h2>Sound Drive Packs (Beta)</h2>
+      <h2>Sound Drive Packs</h2>
       <p>
         Best for music beds, rhythmic loops, drones, and any sound design that
-        should stay tempo-stable instead of pitch-shifting with RPM. Each stem
-        is mapped to a driving-dynamics signal and its volume rises and falls
-        with the intensity of that signal.
+        should stay tempo-stable instead of pitch-shifting with RPM. A
+        <strong>scene engine</strong> controls which stems play together, and
+        <strong>triggers</strong> based on driving telemetry select the active
+        scene. Transitions land on quantized beat or bar boundaries for a
+        musical feel.
       </p>
 
-      <h3>Naming pattern</h3>
+      <h3>Naming patterns</h3>
       <span class="file-pattern">&lt;prefix&gt;_&lt;role&gt;.wav</span>
+      <br />
+      <span class="file-pattern"
+        >&lt;prefix&gt;_&lt;role&gt;_&lt;N&gt;bpm.wav</span
+      >
+      <p>
+        If you use the BPM suffix, include it on every stem for clarity. All BPM
+        declarations within a pack must agree &mdash; conflicting values will
+        log a warning and the first declared BPM wins. If no file declares BPM,
+        the pack defaults to 120 and you can override it in the scene editor.
+      </p>
 
-      <h3>Recognized stem roles</h3>
+      <h3>Stem roles</h3>
+      <p>
+        Most packs need only the four <strong>core</strong> roles. The optional
+        roles exist for producers who want finer-grained scene control. Roles
+        are generic labels &mdash; they do not imply a fixed driving-signal
+        mapping. Which stems play is determined by user-authored
+        <strong>scenes</strong>.
+      </p>
       <table class="data-table">
         <thead>
           <tr>
             <th>Suffix</th>
-            <th>Signal</th>
-            <th>Behaviour</th>
+            <th>Musical purpose</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code>_bass</code></td>
-            <td>Longitudinal G</td>
-            <td>Louder under hard acceleration</td>
-          </tr>
-          <tr>
-            <td><code>_drums</code></td>
-            <td>Cornering intensity</td>
-            <td>Louder in sustained turns</td>
+            <td>Low-frequency energy layer</td>
+            <td>Core</td>
           </tr>
           <tr>
             <td><code>_melody</code></td>
-            <td>Speed</td>
-            <td>Fades in at higher speeds</td>
+            <td>Main harmonic or melodic layer</td>
+            <td>Core</td>
+          </tr>
+          <tr>
+            <td><code>_drums</code></td>
+            <td>Rhythmic backbone</td>
+            <td>Core</td>
           </tr>
           <tr>
             <td><code>_pad</code></td>
-            <td>Always on (base layer)</td>
-            <td>Constant foundation layer</td>
+            <td>Sustained atmosphere</td>
+            <td>Core</td>
           </tr>
           <tr>
             <td><code>_lead</code></td>
-            <td>Spirited driving index</td>
-            <td>Louder during spirited driving</td>
+            <td>Featured melodic accent</td>
+            <td>Optional</td>
           </tr>
           <tr>
             <td><code>_perc</code></td>
-            <td>Braking intensity</td>
-            <td>Louder under hard braking</td>
+            <td>Percussive accents and fills</td>
+            <td>Optional</td>
           </tr>
           <tr>
             <td><code>_fx</code></td>
-            <td>Lateral G</td>
-            <td>Louder in sharp lateral motion</td>
+            <td>Effects and transition moments</td>
+            <td>Optional</td>
           </tr>
           <tr>
             <td><code>_texture</code></td>
-            <td>RPM utilization</td>
-            <td>Louder at higher RPM %</td>
+            <td>Ambient bed or noisy texture</td>
+            <td>Optional</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Scene engine</h3>
+      <p>
+        After importing a Sound Drive pack, open the scene editor from
+        <strong
+          >Settings &rarr; Engine Sound &rarr; Sound Drive Pack &rarr; Edit
+          Scenes</strong
+        >. Each scene defines:
+      </p>
+      <ul>
+        <li>A <strong>name</strong> for the arrangement state.</li>
+        <li>
+          Which <strong>stems are active</strong> (on/off toggles for every stem
+          in the pack).
+        </li>
+        <li>
+          A <strong>trigger condition</strong> &mdash; a threshold comparison
+          against a driving signal (speed, RPM, G-force, etc.), or compound
+          AND/OR logic combining multiple conditions, or &ldquo;always
+          active&rdquo; for the default scene.
+        </li>
+      </ul>
+      <p>
+        Scenes are evaluated in priority order &mdash; the first matching scene
+        wins. If no trigger matches, the default scene plays. New packs
+        auto-generate intensity-based scenes that progressively add stems
+        as driving gets more spirited &mdash; responding to speed,
+        cornering, and overall driving dynamics. No manual setup needed.
+      </p>
+
+      <h3>Available trigger signals</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Signal</th>
+            <th>Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Speed (km/h)</td>
+            <td>OBD</td>
+          </tr>
+          <tr>
+            <td>RPM</td>
+            <td>OBD</td>
+          </tr>
+          <tr>
+            <td>RPM Utilization</td>
+            <td>Derived (rpm / redline)</td>
+          </tr>
+          <tr>
+            <td>Throttle</td>
+            <td>OBD (slow refresh, freshness-gated)</td>
+          </tr>
+          <tr>
+            <td>Lateral G / abs</td>
+            <td>CoreMotion</td>
+          </tr>
+          <tr>
+            <td>Longitudinal G / abs</td>
+            <td>CoreMotion</td>
+          </tr>
+          <tr>
+            <td>Cornering Intensity</td>
+            <td>Derived (0&ndash;1)</td>
+          </tr>
+          <tr>
+            <td>Braking Intensity</td>
+            <td>Derived (0&ndash;1)</td>
+          </tr>
+          <tr>
+            <td>Spirited Index</td>
+            <td>Derived (0&ndash;100)</td>
+          </tr>
+          <tr>
+            <td>Gear</td>
+            <td>Estimated (1-based)</td>
+          </tr>
+          <tr>
+            <td>Is Moving</td>
+            <td>Derived (speed &gt; 0)</td>
           </tr>
         </tbody>
       </table>
 
       <div class="example-block">
-        <div class="example-title">Midnight city drive</div>
+        <div class="example-title">Cyberpunk night run</div>
         <ul>
+          <li><code>cyberpunk_bass_120bpm.wav</code> &mdash; deep sub pulse</li>
           <li>
-            <code>midnight_pad.wav</code> &mdash; airy pad, always-on foundation
+            <code>cyberpunk_melody_120bpm.wav</code> &mdash; filtered synth arp
           </li>
           <li>
-            <code>midnight_bass.wav</code> &mdash; warm bass pulse, rises with
-            acceleration
+            <code>cyberpunk_drums_120bpm.wav</code> &mdash; tight electronic
+            beat
           </li>
           <li>
-            <code>midnight_drums.wav</code> &mdash; muted hi-hat and sidechain
-            pump, louder in turns
+            <code>cyberpunk_pad_120bpm.wav</code> &mdash; wide atmospheric wash
           </li>
           <li>
-            <code>midnight_melody.wav</code> &mdash; shimmering synth line,
-            fades in at speed
+            <code>cyberpunk_lead_120bpm.wav</code> &mdash; acid synth stabs
+          </li>
+          <li>
+            <code>cyberpunk_fx_120bpm.wav</code> &mdash; glitch hits and
+            stutters
           </li>
         </ul>
+        <p>
+          <em
+            >Auto-generated scenes build intensity from speed, cornering,
+            and spirited driving: &ldquo;Chill&rdquo; (bass + pad, default),
+            &ldquo;Cruising&rdquo; (add drums when moving or turning),
+            &ldquo;Spirited&rdquo; (add melody when driving hard or
+            cornering), &ldquo;Full Send&rdquo; (everything at high speed
+            or aggressive driving). Customize in Edit Scenes.</em
+          >
+        </p>
       </div>
 
       <div class="example-block">
-        <div class="example-title">Rally documentary score</div>
+        <div class="example-title">Canyon road orchestral</div>
         <ul>
           <li>
-            <code>rally_pad.wav</code> &mdash; suspense drone, always present
+            <code>canyon_bass_90bpm.wav</code> &mdash; deep cello ostinato
           </li>
           <li>
-            <code>rally_bass.wav</code> &mdash; cello ostinato, rises under
-            acceleration
+            <code>canyon_melody_90bpm.wav</code> &mdash; strings and French horn
           </li>
           <li>
-            <code>rally_drums.wav</code> &mdash; tom pulse, builds through
-            corners
+            <code>canyon_drums_90bpm.wav</code> &mdash; timpani pulse and snare
+            rolls
           </li>
           <li>
-            <code>rally_lead.wav</code> &mdash; distorted tension layer, peaks
-            during spirited driving
+            <code>canyon_pad_90bpm.wav</code> &mdash; choir and string sustain
           </li>
           <li>
-            <code>rally_perc.wav</code> &mdash; snare ghost notes, triggered by
-            braking
+            <code>canyon_perc_90bpm.wav</code> &mdash; triangle and woodblock
+            accents
+          </li>
+          <li>
+            <code>canyon_fx_90bpm.wav</code> &mdash; brass stabs and cymbal
+            swells
           </li>
         </ul>
       </div>
 
       <p>
         <strong>How it works:</strong> all stems loop simultaneously at their
-        original tempo. Each stem&rsquo;s volume is continuously modulated by
-        its mapped driving signal. No pitch-shifting is applied, so rhythmic
-        content stays locked to tempo.
+        original tempo. The scene engine evaluates telemetry triggers with
+        hysteresis and debounce to prevent chatter, then applies scene changes
+        on quantized beat or bar boundaries. No pitch-shifting is applied, so
+        rhythmic content stays locked to tempo.
       </p>
 
       <h3>Tips for Sound Drive packs</h3>
       <ul>
         <li>Think in layers, not songs.</li>
         <li>
-          Use <code>_pad</code> as the always-on foundation; other stems add
-          intensity.
+          Design stems that sound complete in various combinations &mdash;
+          scenes control which subset plays at any time.
         </li>
         <li>
           Keep all files in the same key, tempo, and compatible tonal center.
         </li>
         <li>
           Prefer textures, pads, percussion beds, and filtered arps over
-          prominent lead melodies.
+          prominent lead melodies that sound wrong when suddenly muted.
         </li>
-        <li>Keep transients controlled so volume modulation feels smooth.</li>
+        <li>Keep transients controlled so scene transitions feel smooth.</li>
         <li>All stems in a pack should be the same length so loops align.</li>
       </ul>
 
@@ -320,12 +442,16 @@
 
       <div class="note">
         <strong>Importing in the app</strong>
-        Go to <strong>Settings &rarr; Engine Sound &rarr; Import Audio</strong>.
-        Select individual WAV/MP3 files or a single ZIP archive containing them.
-        A single file creates a one-sample RPM pack. Multiple files with the
-        same prefix create either a classic RPM pack or a Sound Drive pack
-        automatically based on the naming pattern. A single import cannot mix
-        RPM names and Sound Drive stem names.
+        Go to
+        <strong>Settings &rarr; Engine Sound &rarr; Import Audio</strong>
+        (for RPM packs) or
+        <strong>Import Stems</strong> (for Sound Drive packs). Select individual
+        WAV/MP3 files or a single ZIP archive containing them. A single file
+        creates a one-sample RPM pack. Multiple files with the same prefix
+        create either a classic RPM pack or a Sound Drive pack automatically
+        based on the naming pattern. A single import cannot mix RPM names and
+        Sound Drive stem names. After importing a Sound Drive pack, use
+        <strong>Edit Scenes</strong> to configure arrangements and triggers.
       </div>
 
       <div class="note">
