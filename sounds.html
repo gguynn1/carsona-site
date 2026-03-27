@@ -52,20 +52,20 @@
       </div>
 
       <div class="mode-card">
-        <h3>&#x1F3A4; Simple Sampled (one file)</h3>
+        <h3>&#x1F3A4; Classic RPM Packs</h3>
         <p>
-          Import a single WAV or MP3 via Settings. If the filename includes an
-          RPM anchor (e.g. <code>loop_900rpm.wav</code>), that RPM is preserved;
-          otherwise the app treats it as a single sample near idle.
+          Best for realistic engine sounds and mechanical loops. Import WAV or
+          MP3 files named with RPM anchors. The app crossfades between layers
+          and pitch-shifts to track live RPM.
         </p>
       </div>
 
       <div class="mode-card">
-        <h3>&#x1F3B6; Advanced Packs (multiple files)</h3>
+        <h3>&#x1F3B6; Sound Drive (Beta)</h3>
         <p>
-          Import multiple files with a shared prefix. Depending on the naming
-          pattern, the app creates either a <strong>classic RPM pack</strong> or
-          an <strong>ambient gear-aware pack</strong>.
+          Multi-stem music tracks whose volumes are modulated by driving
+          dynamics &mdash; lateral G, braking, speed, RPM, and cornering
+          intensity. No pitch-shifting; tempo stays locked.
         </p>
       </div>
 
@@ -73,7 +73,15 @@
 
       <h2>Supported Formats</h2>
       <ul>
-        <li>Import accepts <code>.wav</code> and <code>.mp3</code> files.</li>
+        <li>
+          Import accepts <code>.wav</code>, <code>.mp3</code>, and
+          <code>.zip</code> files.
+        </li>
+        <li>
+          A single <code>.zip</code> archive containing WAV/MP3 files is
+          extracted automatically &mdash; handy for importing a complete pack
+          in one step.
+        </li>
         <li>Imported files are normalized to WAV on device.</li>
         <li>
           Files longer than 30 seconds are trimmed to the first 30 seconds.
@@ -160,69 +168,92 @@
         <li>Minimal reverb and no long tails.</li>
       </ul>
 
-      <!-- ───────────────── Ambient Packs ───────────────── -->
+      <!-- ───────────────── Sound Drive Packs ───────────────── -->
 
-      <h2>Ambient Gear-Aware Packs</h2>
+      <h2>Sound Drive Packs (Beta)</h2>
       <p>
-        Best for music beds, rhythmic loops, drones, and sound design that
-        should stay tempo-stable instead of pitch-shifting with RPM. Layers fade
-        in and out based on motion and estimated gear.
+        Best for music beds, rhythmic loops, drones, and any sound design that
+        should stay tempo-stable instead of pitch-shifting with RPM. Each stem
+        is mapped to a driving-dynamics signal and its volume rises and falls
+        with the intensity of that signal.
       </p>
 
       <h3>Naming pattern</h3>
       <span class="file-pattern"
-        >&lt;prefix&gt;_stopped.wav<br />&lt;prefix&gt;_moving.wav<br />&lt;prefix&gt;_gear2.wav
-        &nbsp;(optional)<br />&lt;prefix&gt;_gear3.wav &nbsp;(optional)<br />...</span
+        >&lt;prefix&gt;_&lt;role&gt;.wav</span
       >
 
-      <p>
-        Minimum pack: <code>prefix_stopped.wav</code> +
-        <code>prefix_moving.wav</code>. Add <code>gear1</code>&ndash;<code
-          >gear4</code
-        >
-        layers for extra detail.
-      </p>
+      <h3>Recognized stem roles</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Suffix</th>
+            <th>Signal</th>
+            <th>Behaviour</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>_bass</code></td>
+            <td>Longitudinal G</td>
+            <td>Louder under hard acceleration</td>
+          </tr>
+          <tr>
+            <td><code>_drums</code></td>
+            <td>Cornering intensity</td>
+            <td>Louder in sustained turns</td>
+          </tr>
+          <tr>
+            <td><code>_melody</code></td>
+            <td>Speed</td>
+            <td>Fades in at higher speeds</td>
+          </tr>
+          <tr>
+            <td><code>_pad</code></td>
+            <td>Always on (base layer)</td>
+            <td>Constant foundation layer</td>
+          </tr>
+          <tr>
+            <td><code>_lead</code></td>
+            <td>Spirited driving index</td>
+            <td>Louder during spirited driving</td>
+          </tr>
+          <tr>
+            <td><code>_perc</code></td>
+            <td>Braking intensity</td>
+            <td>Louder under hard braking</td>
+          </tr>
+          <tr>
+            <td><code>_fx</code></td>
+            <td>Lateral G</td>
+            <td>Louder in sharp lateral motion</td>
+          </tr>
+          <tr>
+            <td><code>_texture</code></td>
+            <td>RPM utilization</td>
+            <td>Louder at higher RPM %</td>
+          </tr>
+        </tbody>
+      </table>
 
       <div class="example-block">
         <div class="example-title">Midnight city drive</div>
         <ul>
           <li>
-            <code>midnight_city_stopped.wav</code> &mdash; airy pad, distant
-            traffic wash, soft synth bloom
+            <code>midnight_pad.wav</code> &mdash; airy pad, always-on
+            foundation
           </li>
           <li>
-            <code>midnight_city_moving.wav</code> &mdash; steady lo-fi beat and
-            warm bass pulse
+            <code>midnight_bass.wav</code> &mdash; warm bass pulse, rises with
+            acceleration
           </li>
           <li>
-            <code>midnight_city_gear2.wav</code> &mdash; muted hi-hat motion and
-            subtle sidechain pump
+            <code>midnight_drums.wav</code> &mdash; muted hi-hat and sidechain
+            pump, louder in turns
           </li>
           <li>
-            <code>midnight_city_gear4.wav</code> &mdash; wider shimmer and
-            brighter top-end energy
-          </li>
-        </ul>
-      </div>
-
-      <div class="example-block">
-        <div class="example-title">Electric sunrise cruiser</div>
-        <ul>
-          <li>
-            <code>sunrise_ev_stopped.wav</code> &mdash; gentle inverter hum and
-            soft glassy pad
-          </li>
-          <li>
-            <code>sunrise_ev_moving.wav</code> &mdash; smooth sequenced synth
-            bed with rolling low end
-          </li>
-          <li>
-            <code>sunrise_ev_gear2.wav</code> &mdash; brighter plucks for light
-            acceleration feel
-          </li>
-          <li>
-            <code>sunrise_ev_gear4.wav</code> &mdash; open stereo shimmer for
-            highway cruising
+            <code>midnight_melody.wav</code> &mdash; shimmering synth line,
+            fades in at speed
           </li>
         </ul>
       </div>
@@ -231,49 +262,52 @@
         <div class="example-title">Rally documentary score</div>
         <ul>
           <li>
-            <code>rally_score_stopped.wav</code> &mdash; suspense drone and
-            dust-wind ambience
+            <code>rally_pad.wav</code> &mdash; suspense drone, always present
           </li>
           <li>
-            <code>rally_score_moving.wav</code> &mdash; tom pulse and repeating
-            cello ostinato
+            <code>rally_bass.wav</code> &mdash; cello ostinato, rises under
+            acceleration
           </li>
           <li>
-            <code>rally_score_gear2.wav</code> &mdash; extra snare ghost notes
-            and grit
+            <code>rally_drums.wav</code> &mdash; tom pulse, builds through
+            corners
           </li>
           <li>
-            <code>rally_score_gear3.wav</code> &mdash; added distorted pulse and
-            tension layer
+            <code>rally_lead.wav</code> &mdash; distorted tension layer, peaks
+            during spirited driving
+          </li>
+          <li>
+            <code>rally_perc.wav</code> &mdash; snare ghost notes, triggered by
+            braking
           </li>
         </ul>
       </div>
 
       <p>
-        <strong>How it works:</strong> <code>stopped</code> plays when
-        stationary, <code>moving</code> fades in as you roll, and
-        <code>gearN</code> layers add extra color for the current estimated
-        gear. Ambient packs do <em>not</em> use RPM varispeed, so tempo stays
-        locked.
+        <strong>How it works:</strong> all stems loop simultaneously at their
+        original tempo. Each stem&rsquo;s volume is continuously modulated by
+        its mapped driving signal. No pitch-shifting is applied, so rhythmic
+        content stays locked to tempo.
       </p>
 
-      <h3>Tips for ambient packs</h3>
+      <h3>Tips for Sound Drive packs</h3>
       <ul>
         <li>Think in layers, not songs.</li>
         <li>
-          Make <code>stopped</code> calmer and sparser;
-          <code>moving</code> fuller and more energetic.
+          Use <code>_pad</code> as the always-on foundation; other stems add
+          intensity.
         </li>
         <li>
-          Use <code>gearN</code> files as subtle intensity or color layers, not
-          full replacements.
+          Keep all files in the same key, tempo, and compatible tonal center.
         </li>
-        <li>Keep all files in the same key or compatible tonal center.</li>
         <li>
-          Prefer textures, pads, percussion beds, and filtered arps over lead
-          melodies.
+          Prefer textures, pads, percussion beds, and filtered arps over
+          prominent lead melodies.
         </li>
-        <li>Keep transients controlled so crossfades feel smooth.</li>
+        <li>Keep transients controlled so volume modulation feels smooth.</li>
+        <li>
+          All stems in a pack should be the same length so loops align.
+        </li>
       </ul>
 
       <!-- ───────────────── General Tips ───────────────── -->
@@ -292,9 +326,11 @@
       <div class="note">
         <strong>Importing in the app</strong>
         Go to <strong>Settings &rarr; Engine Sound &rarr; Import Audio</strong>.
-        A single file creates a simple pack. Multiple files with the same prefix
-        create an advanced pack automatically. A single import cannot mix RPM
-        names and ambient names.
+        Select individual WAV/MP3 files or a single ZIP archive containing
+        them. A single file creates a one-sample RPM pack. Multiple files with
+        the same prefix create either a classic RPM pack or a Sound Drive pack
+        automatically based on the naming pattern. A single import cannot mix
+        RPM names and Sound Drive stem names.
       </div>
 
       <div class="note">
