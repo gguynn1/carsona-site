@@ -67,12 +67,15 @@
           <tr>
             <td><strong>Location</strong></td>
             <td>
-              Provide GPS context for trip logging and fetch local weather
-              conditions
+              GPS speed, heading, and altitude for the dashboard; reverse
+              geocoding (Apple on-device) for area, road, and sometimes a
+              named nearby feature; local weather via Open-Meteo when enabled
             </td>
             <td>
               Stored locally; coordinates sent to Open-Meteo for weather context
-              when weather features are active (no API key required)
+              when weather features are active (no API key required). Geocoded
+              strings stay on-device unless you use cloud AI, in which case they
+              may appear in prompts like other ambient context.
             </td>
           </tr>
           <tr>
