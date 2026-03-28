@@ -255,34 +255,151 @@
         </tbody>
       </table>
 
-      <h3>Scene engine</h3>
+      <h3>How scene management works</h3>
       <p>
-        After importing a Sound Drive pack, open the scene editor from
+        A <strong>scene</strong> is a saved arrangement state &mdash; it defines
+        which stems are playing and how loud each one is relative to your
+        driving. When you import a Sound Drive pack, Carsona automatically
+        creates a set of scenes so the music responds to your driving
+        immediately. No manual setup is needed.
+      </p>
+
+      <h4>What happens when you import a pack</h4>
+      <ol>
+        <li>
+          Stems are identified by their role tokens (<code>_bass</code>,
+          <code>_drums</code>, etc.) and loaded into the audio engine.
+        </li>
+        <li>
+          Carsona generates <strong>character-based scenes</strong> &mdash; each
+          with a different stem arrangement and modulation personality, tuned to
+          a driving context (parked, cruising, cornering, spirited).
+        </li>
+        <li>
+          The scenes are saved alongside the pack. You can customize them later
+          in <strong>Edit Scenes</strong>, or use the defaults as-is.
+        </li>
+      </ol>
+
+      <h4>Default scenes</h4>
+      <p>
+        Each scene has its own <strong>musical character</strong>, not just more
+        or fewer stems. The arrangement changes personality based on how
+        you&rsquo;re driving:
+      </p>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Scene</th>
+            <th>Active stems</th>
+            <th>When it activates</th>
+            <th>What it feels like</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Idle</strong></td>
+            <td>bass, pad, texture</td>
+            <td>Default &mdash; always on when nothing else matches</td>
+            <td>
+              Warm atmosphere. Constant volume, no movement. The foundation
+              while parked or crawling.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Cruise</strong></td>
+            <td>+ drums, perc</td>
+            <td>Speed &gt; 20&nbsp;km/h</td>
+            <td>
+              Rhythm joins when you start moving. Drums follow engine RPM so the
+              beat tracks your engine.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Push</strong></td>
+            <td>+ melody</td>
+            <td>Speed &gt; 55&nbsp;km/h <em>or</em> spirited index &gt; 30</td>
+            <td>
+              Melodic interest for highway driving or spirited city runs. Melody
+              volume follows your driving character.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Carve</strong></td>
+            <td>bass, drums, melody, lead, perc <em>(drops pad)</em></td>
+            <td>Cornering intensity &gt; 0.2</td>
+            <td>
+              The arrangement changes character: atmospheric pad drops out, lead
+              and percussive accents come alive from your steering input. Lead
+              and perc follow lateral G-force at 20&nbsp;Hz &mdash; nearly
+              silent on straights, full volume through a turn.
+            </td>
+          </tr>
+          <tr>
+            <td><strong>Full Send</strong></td>
+            <td>All stems</td>
+            <td>Spirited index &gt; 60 <em>or</em> hard cornering at speed</td>
+            <td>
+              Everything plays. Every stem is modulated by a driving signal.
+              Maximum energy.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <p>
+        Scenes are evaluated in priority order &mdash;
+        <strong>Full Send</strong> is checked first, <strong>Idle</strong> last.
+        The first scene whose trigger condition is met becomes active. Only
+        stems present in your pack generate scenes, so a 3-stem pack might
+        produce 3 scenes while a 6-stem pack produces all 5.
+      </p>
+
+      <h4>How scenes respond to your driving</h4>
+      <ul>
+        <li>
+          <strong>Quantized transitions</strong> &mdash; when a scene change is
+          triggered, it waits for the next beat or bar boundary before
+          switching. This keeps arrangement changes musical rather than abrupt.
+        </li>
+        <li>
+          <strong>Anti-chatter</strong> &mdash; hysteresis and a short hold
+          prevent rapid scene flickering when you&rsquo;re near a trigger
+          threshold (e.g. hovering around 55&nbsp;km/h).
+        </li>
+        <li>
+          <strong>Continuous modulation</strong> &mdash; within the active
+          scene, each stem can follow a driving signal to continuously adjust
+          its volume between a configured floor and full level. Bass grows with
+          speed, drums pulse with RPM, lead swells through corners.
+        </li>
+        <li>
+          <strong>Dual-rate modulation</strong> &mdash; modulation driven by
+          device sensors (lateral G, cornering, braking) updates at ~20&nbsp;Hz
+          via the iPhone&rsquo;s accelerometer for near-instant response.
+          OBD-driven modulation (speed, RPM) updates at the ~8&nbsp;Hz poll
+          rate.
+        </li>
+      </ul>
+
+      <h4>Customizing scenes</h4>
+      <p>
+        Open the scene editor from
         <strong
           >Settings &rarr; Engine Sound &rarr; Sound Drive Pack &rarr; Edit
           Scenes</strong
-        >. Each scene defines:
+        >. You can:
       </p>
       <ul>
-        <li>A <strong>name</strong> for the arrangement state.</li>
+        <li>Rename scenes or add new ones</li>
+        <li>Toggle which stems play in each scene</li>
         <li>
-          Which <strong>stems are active</strong> (on/off toggles for every stem
-          in the pack).
+          Set trigger conditions (speed thresholds, G-force, compound AND/OR
+          logic, or always-on)
         </li>
-        <li>
-          A <strong>trigger condition</strong> &mdash; a threshold comparison
-          against a driving signal (speed, RPM, G-force, etc.), or compound
-          AND/OR logic combining multiple conditions, or &ldquo;always
-          active&rdquo; for the default scene.
-        </li>
+        <li>Assign modulation signals and floor levels per stem</li>
+        <li>Drag to reorder scene priority</li>
+        <li>Change pack-level BPM and quantization (beat vs bar)</li>
       </ul>
-      <p>
-        Scenes are evaluated in priority order &mdash; the first matching scene
-        wins. If no trigger matches, the default scene plays. New packs
-        auto-generate intensity-based scenes that progressively add stems
-        as driving gets more spirited &mdash; responding to speed,
-        cornering, and overall driving dynamics. No manual setup needed.
-      </p>
 
       <h3>Available trigger signals</h3>
       <table class="data-table">
@@ -294,7 +411,7 @@
         </thead>
         <tbody>
           <tr>
-            <td>Speed (km/h)</td>
+            <td>Speed (km/h or mph)</td>
             <td>OBD</td>
           </tr>
           <tr>
@@ -307,7 +424,7 @@
           </tr>
           <tr>
             <td>Throttle</td>
-            <td>OBD (slow refresh, freshness-gated)</td>
+            <td>OBD (adaptive-secondary refresh, freshness-gated)</td>
           </tr>
           <tr>
             <td>Lateral G / abs</td>
@@ -364,12 +481,12 @@
         </ul>
         <p>
           <em
-            >Auto-generated scenes build intensity from speed, cornering,
-            and spirited driving: &ldquo;Chill&rdquo; (bass + pad, default),
-            &ldquo;Cruising&rdquo; (add drums when moving or turning),
-            &ldquo;Spirited&rdquo; (add melody when driving hard or
-            cornering), &ldquo;Full Send&rdquo; (everything at high speed
-            or aggressive driving). Customize in Edit Scenes.</em
+            >Auto-generated scenes create distinct driving characters:
+            &ldquo;Idle&rdquo; (warm atmosphere), &ldquo;Cruise&rdquo; (rhythm
+            joins when moving), &ldquo;Push&rdquo; (melody for highway driving),
+            &ldquo;Carve&rdquo; (tight arrangement, lead/perc follow lateral G
+            through corners at 20&nbsp;Hz), &ldquo;Full Send&rdquo; (everything,
+            spirited driving). Customize in Edit Scenes.</em
           >
         </p>
       </div>

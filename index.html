@@ -111,8 +111,9 @@
           <div class="feature-title">Engine Sound Synthesis</div>
           <div class="feature-desc">
             Hear your engine through harmonic synthesis, classic RPM packs, or
-            Sound Drive &mdash; scene-based adaptive music with telemetry-driven
-            arrangement changes on quantized boundaries.
+            Sound Drive &mdash; adaptive music that changes arrangement with
+            your driving style and continuously modulates stems from steering,
+            speed, and G-force in real time.
           </div>
         </div>
         <div class="feature">
@@ -202,10 +203,11 @@
       <div class="prose">
         <p>
           <strong>OBD-II (via BLE)</strong> delivers the core engine data
-          &mdash; RPM and speed arrive together at roughly 8&nbsp;Hz.
-          Twenty-nine secondary PIDs (coolant, intake temp, fuel status, MAF,
-          and more) each refresh on a rotating schedule, so the full picture
-          updates continuously without overwhelming the adapter.
+          &mdash; RPM and speed arrive together at roughly 8&nbsp;Hz. Secondary
+          PIDs (coolant, intake temp, fuel status, MAF, and more) now use an
+          adaptive scheduler, so driver-facing values like throttle, load,
+          coolant, and fuel refresh faster while slower diagnostic channels
+          continue rotating in the background without overwhelming the adapter.
         </p>
         <p>
           <strong>Device sensors</strong> run at 20&nbsp;Hz for G-force and jerk
@@ -218,8 +220,11 @@
         <p>
           <strong>Weather &amp; location</strong> are fetched via Open-Meteo
           (temperature, humidity, wind, conditions) and Apple reverse geocoding
-          (road names, city context). In Road Trip mode, nearby landmarks are
-          discovered through MapKit for richer AI commentary.
+          (road names, city context). Reverse geocoding now refreshes on a
+          shorter time gate, speed-adaptive movement thresholds, and meaningful
+          heading changes so street-name context catches up faster after turns.
+          In Road Trip mode, nearby landmarks are discovered through MapKit for
+          richer AI commentary.
         </p>
         <p>
           Because the event detector evaluates at ~8&nbsp;Hz but motion sensors
@@ -562,7 +567,8 @@
           <tr>
             <td><strong>Apple Geocoding</strong></td>
             <td>
-              Reverse geocode for road names and city context. Apple MapKit for
+              Reverse geocode for road names and city context, refreshed with
+              shorter time, movement, and heading-change gates. Apple MapKit for
               nearby landmarks in Road Trip mode.
             </td>
           </tr>
@@ -592,7 +598,9 @@
             <td><strong>ElevenLabs</strong></td>
             <td>
               Cloud text-to-speech for natural-sounding AI voice. Optional
-              &mdash; device speech is always available as fallback.
+              &mdash; device speech is always available as fallback, and spoken
+              lines are normalized first so markdown artifacts and terse road
+              abbreviations are not read aloud awkwardly.
             </td>
           </tr>
           <tr>
